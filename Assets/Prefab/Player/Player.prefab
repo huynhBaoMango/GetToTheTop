@@ -11,13 +11,14 @@ GameObject:
   - component: {fileID: 486334645711060156}
   - component: {fileID: 493457464559420204}
   - component: {fileID: 502996006825046784}
+  - component: {fileID: 2616694343958082543}
   m_Layer: 0
   m_Name: SM_Wep_HuntingRifle_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &486334645711060156
 Transform:
   m_ObjectHideFlags: 0
@@ -27,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 480014717765554166}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.287, y: -0.0009994507, z: 0.752}
+  m_LocalPosition: {x: 0.275, y: 0.14100003, z: 0.881}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -86,6 +87,21 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &2616694343958082543
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 480014717765554166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0144dfac50eb8c4d890c1b3cd956e10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _componentIndexCache: 255
+  _addedNetworkObject: {fileID: 8192566354860284824}
+  _networkObjectCache: {fileID: 0}
 --- !u!1 &480166821465538416
 GameObject:
   m_ObjectHideFlags: 0
@@ -457,13 +473,14 @@ GameObject:
   - component: {fileID: 6496978891891785896}
   - component: {fileID: 6512089359683331228}
   - component: {fileID: 6518376083154928528}
+  - component: {fileID: 739868739877159353}
   m_Layer: 0
   m_Name: SM_Wep_AssaultRifle_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &6496978891891785896
 Transform:
   m_ObjectHideFlags: 0
@@ -473,7 +490,7 @@ Transform:
   m_GameObject: {fileID: 6494592563325556078}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.287, y: -0.0009994507, z: 0.752}
+  m_LocalPosition: {x: 0.275, y: 0.141, z: 0.881}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -532,6 +549,21 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &739868739877159353
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6494592563325556078}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00806937fc394114ea8ee1561910e4b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _componentIndexCache: 255
+  _addedNetworkObject: {fileID: 8192566354860284824}
+  _networkObjectCache: {fileID: 0}
 --- !u!1 &6494818418215868950
 GameObject:
   m_ObjectHideFlags: 0
@@ -809,7 +841,7 @@ Transform:
   m_GameObject: {fileID: 6605224598710239337}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 0.372}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0.3}
   m_LocalScale: {x: 0.8, y: 0.3, z: 0.3}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -896,6 +928,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6605224599093577347}
   - component: {fileID: 4467688700258864016}
+  - component: {fileID: -5056188585000673120}
   - component: {fileID: 8192566354860284824}
   - component: {fileID: -7170926880071132319}
   - component: {fileID: 581932312337192401}
@@ -935,8 +968,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 886795766ade8604296257fdba4602d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _componentIndexCache: 255
+  _addedNetworkObject: {fileID: 8192566354860284824}
+  _networkObjectCache: {fileID: 0}
   weapons:
   - {fileID: 3977769449653084863}
+  - {fileID: 739868739877159353}
+  - {fileID: 2616694343958082543}
+  currentWeapon: {fileID: 0}
+--- !u!114 &-5056188585000673120
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6605224599093577351}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdf0d9db420363945a48b8210c9dae04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _componentIndexCache: 255
+  _addedNetworkObject: {fileID: 8192566354860284824}
+  _networkObjectCache: {fileID: 0}
+  pickupRanger: 4
+  pickupkey: 101
+  pickupLayers:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!114 &8192566354860284824
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -954,8 +1013,9 @@ MonoBehaviour:
   <PredictedSpawn>k__BackingField: {fileID: 0}
   <PredictedOwner>k__BackingField: {fileID: 0}
   NetworkBehaviours:
-  - {fileID: 0}
   - {fileID: -7170926880071132319}
+  - {fileID: 5767528934636357613}
+  - {fileID: 3977769449653084863}
   <InitializedParentNetworkBehaviour>k__BackingField: {fileID: 0}
   <InitializedNestedNetworkObjects>k__BackingField: []
   _isNetworked: 1
@@ -977,12 +1037,12 @@ MonoBehaviour:
   _spectatorInterpolation: 2
   _enableTeleport: 0
   _teleportThreshold: 1
-  <PrefabId>k__BackingField: 0
+  <PrefabId>k__BackingField: 6
   <SpawnableCollectionId>k__BackingField: 0
   <AssetPathHash>k__BackingField: 18016179864132615482
   <SceneId>k__BackingField: 0
   SerializedTransformProperties:
-    Position: {x: 0, y: 20, z: 0}
+    Position: {x: 0, y: 0, z: 0}
     Rotation: {x: 0, y: 0, z: 0, w: 1}
     LocalScale: {x: 1, y: 1, z: 1}
 --- !u!114 &-7170926880071132319
@@ -997,7 +1057,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2836e36774ca1c4bbbee976e17b649c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _componentIndexCache: 1
+  _componentIndexCache: 0
   _addedNetworkObject: {fileID: 8192566354860284824}
   _networkObjectCache: {fileID: 8192566354860284824}
   _componentConfiguration: 0
@@ -1066,9 +1126,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3338d7305f1587a40bea66fd6766ba2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _componentIndexCache: 255
+  _componentIndexCache: 1
   _addedNetworkObject: {fileID: 8192566354860284824}
-  _networkObjectCache: {fileID: 0}
+  _networkObjectCache: {fileID: 8192566354860284824}
   walkingSpeed: 3
   runningSpeed: 7
   jumpSpeed: 8
@@ -1942,7 +2002,7 @@ Transform:
   m_GameObject: {fileID: 6698015674448307159}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.355, y: 0.147, z: 0.905}
+  m_LocalPosition: {x: 0.343, y: 0.2889995, z: 1.0339999}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2014,6 +2074,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e930d698a9f8e7244ad3163d72cc730e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _componentIndexCache: 255
+  _componentIndexCache: 2
   _addedNetworkObject: {fileID: 8192566354860284824}
-  _networkObjectCache: {fileID: 0}
+  _networkObjectCache: {fileID: 8192566354860284824}
