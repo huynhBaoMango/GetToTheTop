@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 493457464559420204}
   - component: {fileID: 502996006825046784}
   - component: {fileID: 2616694343958082543}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SM_Wep_HuntingRifle_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -99,9 +99,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0144dfac50eb8c4d890c1b3cd956e10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _componentIndexCache: 255
+  _componentIndexCache: 6
   _addedNetworkObject: {fileID: 8192566354860284824}
-  _networkObjectCache: {fileID: 0}
+  _networkObjectCache: {fileID: 8192566354860284824}
+  damage: 15
+  MaxRange: 20
+  WeaponHitLayers:
+    serializedVersion: 2
+    m_Bits: 321
 --- !u!1 &480166821465538416
 GameObject:
   m_ObjectHideFlags: 0
@@ -113,7 +118,7 @@ GameObject:
   - component: {fileID: 477714081660361044}
   - component: {fileID: 493320200687920182}
   - component: {fileID: 503798306146145558}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SM_Wep_HuntingRifle_01_Bolt_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -196,7 +201,7 @@ GameObject:
   - component: {fileID: 486070377534195922}
   - component: {fileID: 493089135284002496}
   - component: {fileID: 503219011702386450}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SM_Wep_HuntingRifle_01_Scope_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -279,7 +284,7 @@ GameObject:
   - component: {fileID: 477682192187205570}
   - component: {fileID: 493451438313394084}
   - component: {fileID: 503509146675937806}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SM_Wep_HuntingRifle_01_Trigger_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -362,8 +367,7 @@ GameObject:
   - component: {fileID: 4020278404774456499}
   - component: {fileID: 1556184897009707061}
   - component: {fileID: 6310157271063819311}
-  - component: {fileID: 5728714856150651189}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -439,29 +443,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &5728714856150651189
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2977802116279124631}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6494592563325556078
 GameObject:
   m_ObjectHideFlags: 0
@@ -474,7 +455,7 @@ GameObject:
   - component: {fileID: 6512089359683331228}
   - component: {fileID: 6518376083154928528}
   - component: {fileID: 739868739877159353}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SM_Wep_AssaultRifle_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -561,9 +542,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00806937fc394114ea8ee1561910e4b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _componentIndexCache: 255
+  _componentIndexCache: 5
   _addedNetworkObject: {fileID: 8192566354860284824}
-  _networkObjectCache: {fileID: 0}
+  _networkObjectCache: {fileID: 8192566354860284824}
+  damage: 10
+  MaxRange: 20
+  WeaponHitLayers:
+    serializedVersion: 2
+    m_Bits: 321
 --- !u!1 &6494818418215868950
 GameObject:
   m_ObjectHideFlags: 0
@@ -575,7 +561,7 @@ GameObject:
   - component: {fileID: 6496569780503315600}
   - component: {fileID: 6508158440342819654}
   - component: {fileID: 6518255307815470246}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SM_Wep_AssaultRifle_01_Magazine_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -658,7 +644,7 @@ GameObject:
   - component: {fileID: 6500853616339795702}
   - component: {fileID: 6508378125525031758}
   - component: {fileID: 6517696431121333016}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SM_Wep_AssaultRifle_01_Slide_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -741,7 +727,7 @@ GameObject:
   - component: {fileID: 6500597079314555778}
   - component: {fileID: 6508100605278311256}
   - component: {fileID: 6517737102960721988}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SM_Wep_AssaultRifle_01_Trigger_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -824,8 +810,7 @@ GameObject:
   - component: {fileID: 6605224598710239336}
   - component: {fileID: 6605224598710239381}
   - component: {fileID: 6605224598710239382}
-  - component: {fileID: 6605224598710239383}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: visor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -897,27 +882,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &6605224598710239383
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6605224598710239337}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6605224599093577351
 GameObject:
   m_ObjectHideFlags: 0
@@ -933,7 +897,9 @@ GameObject:
   - component: {fileID: -7170926880071132319}
   - component: {fileID: 581932312337192401}
   - component: {fileID: 5767528934636357613}
-  m_Layer: 0
+  - component: {fileID: 5190073114736031286}
+  - component: {fileID: 7378023689698349988}
+  m_Layer: 8
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -950,7 +916,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 1, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4020278404774456499}
@@ -968,9 +934,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 886795766ade8604296257fdba4602d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _componentIndexCache: 255
+  _componentIndexCache: 0
   _addedNetworkObject: {fileID: 8192566354860284824}
-  _networkObjectCache: {fileID: 0}
+  _networkObjectCache: {fileID: 8192566354860284824}
   weapons:
   - {fileID: 3977769449653084863}
   - {fileID: 739868739877159353}
@@ -988,9 +954,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdf0d9db420363945a48b8210c9dae04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _componentIndexCache: 255
+  _componentIndexCache: 1
   _addedNetworkObject: {fileID: 8192566354860284824}
-  _networkObjectCache: {fileID: 0}
+  _networkObjectCache: {fileID: 8192566354860284824}
   pickupRanger: 4
   pickupkey: 101
   pickupLayers:
@@ -1013,8 +979,13 @@ MonoBehaviour:
   <PredictedSpawn>k__BackingField: {fileID: 0}
   <PredictedOwner>k__BackingField: {fileID: 0}
   NetworkBehaviours:
+  - {fileID: 4467688700258864016}
+  - {fileID: -5056188585000673120}
   - {fileID: -7170926880071132319}
   - {fileID: 5767528934636357613}
+  - {fileID: 0}
+  - {fileID: 739868739877159353}
+  - {fileID: 2616694343958082543}
   - {fileID: 3977769449653084863}
   <InitializedParentNetworkBehaviour>k__BackingField: {fileID: 0}
   <InitializedNestedNetworkObjects>k__BackingField: []
@@ -1037,7 +1008,7 @@ MonoBehaviour:
   _spectatorInterpolation: 2
   _enableTeleport: 0
   _teleportThreshold: 1
-  <PrefabId>k__BackingField: 6
+  <PrefabId>k__BackingField: 9
   <SpawnableCollectionId>k__BackingField: 0
   <AssetPathHash>k__BackingField: 18016179864132615482
   <SceneId>k__BackingField: 0
@@ -1057,7 +1028,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2836e36774ca1c4bbbee976e17b649c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _componentIndexCache: 0
+  _componentIndexCache: 2
   _addedNetworkObject: {fileID: 8192566354860284824}
   _networkObjectCache: {fileID: 8192566354860284824}
   _componentConfiguration: 0
@@ -1108,12 +1079,12 @@ CharacterController:
   m_Enabled: 1
   serializedVersion: 3
   m_Height: 2
-  m_Radius: 0.5
+  m_Radius: 0.25
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!114 &5767528934636357613
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1126,7 +1097,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3338d7305f1587a40bea66fd6766ba2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _componentIndexCache: 1
+  _componentIndexCache: 3
   _addedNetworkObject: {fileID: 8192566354860284824}
   _networkObjectCache: {fileID: 8192566354860284824}
   walkingSpeed: 3
@@ -1138,6 +1109,46 @@ MonoBehaviour:
   canMove: 1
   cameraYOffset: 1.6
   anim: {fileID: 0}
+  PlayerSelfPlayer: 7
+--- !u!136 &5190073114736031286
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6605224599093577351}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.25
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0.05721116}
+--- !u!114 &7378023689698349988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6605224599093577351}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92a4de59d6df61c4a8438dc69f240d86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _componentIndexCache: 255
+  _addedNetworkObject: {fileID: 8192566354860284824}
+  _networkObjectCache: {fileID: 0}
+  maxHealt: 100
 --- !u!1 &6697071196825697321
 GameObject:
   m_ObjectHideFlags: 0
@@ -1149,7 +1160,7 @@ GameObject:
   - component: {fileID: 6699200759134737289}
   - component: {fileID: 6665530156696040205}
   - component: {fileID: 6676028275002250857}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SM_Wep_Revolver_01_Cylinder_Bullet_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1232,7 +1243,7 @@ GameObject:
   - component: {fileID: 6699151881302924699}
   - component: {fileID: 6669828966577039201}
   - component: {fileID: 6675170894707986117}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SM_Wep_Revolver_01_Trigger_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1315,7 +1326,7 @@ GameObject:
   - component: {fileID: 6699568263435930385}
   - component: {fileID: 6666101273835056253}
   - component: {fileID: 6675232461439296545}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SM_Wep_Revolver_01_Cylinder_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1398,7 +1409,7 @@ GameObject:
   - component: {fileID: 6699435196994910931}
   - component: {fileID: 6665532520051756111}
   - component: {fileID: 6675747172086816041}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SM_Wep_Revolver_01_Cylinder_Bullet_02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1481,7 +1492,7 @@ GameObject:
   - component: {fileID: 6694570841723930649}
   - component: {fileID: 6669781823095639909}
   - component: {fileID: 6675286735440594515}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SM_Wep_Revolver_01_Hammer_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1564,7 +1575,7 @@ GameObject:
   - component: {fileID: 6694056326475191173}
   - component: {fileID: 6665913330219029657}
   - component: {fileID: 6675441066426164251}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SM_Wep_Revolver_01_Cylinder_Spin_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1653,7 +1664,7 @@ GameObject:
   - component: {fileID: 6694409389553184629}
   - component: {fileID: 6665637751570794055}
   - component: {fileID: 6675341917317191127}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SM_Wep_Revolver_01_Cylinder_Bullet_06
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1736,7 +1747,7 @@ GameObject:
   - component: {fileID: 6699299965061352637}
   - component: {fileID: 6669636707141038787}
   - component: {fileID: 6675682012750416803}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SM_Wep_Revolver_01_Cylinder_Bullet_05
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1819,7 +1830,7 @@ GameObject:
   - component: {fileID: 6694440471315048113}
   - component: {fileID: 6665387786189389257}
   - component: {fileID: 6675393049081195867}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SM_Wep_Revolver_01_Cylinder_Bullet_03
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1902,7 +1913,7 @@ GameObject:
   - component: {fileID: 6694408197151304757}
   - component: {fileID: 6665415054873806015}
   - component: {fileID: 6676069416857925647}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SM_Wep_Revolver_01_Cylinder_Bullet_04
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1986,7 +1997,7 @@ GameObject:
   - component: {fileID: 6665712019684784907}
   - component: {fileID: 6675877008673003161}
   - component: {fileID: 3977769449653084863}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SM_Wep_Revolver_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2074,6 +2085,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e930d698a9f8e7244ad3163d72cc730e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _componentIndexCache: 2
+  _componentIndexCache: 7
   _addedNetworkObject: {fileID: 8192566354860284824}
   _networkObjectCache: {fileID: 8192566354860284824}
+  damage: 5
+  MaxRange: 20
+  WeaponHitLayers:
+    serializedVersion: 2
+    m_Bits: 321

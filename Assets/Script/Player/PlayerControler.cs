@@ -23,6 +23,7 @@ public class PlayerControler : NetworkBehaviour
     private Camera PlayerCamera;
     [Header("Animator setup")]
     public Animation anim;
+    [SerializeField] public int PlayerSelfPlayer = 7;
     public override void OnStartClient()
     {
         base.OnStartClient();
@@ -34,6 +35,11 @@ public class PlayerControler : NetworkBehaviour
             
             if(TryGetComponent(out PlayerWeapone playerWeapone))
                 playerWeapone.InitializeWeapons(PlayerCamera.transform);
+            gameObject.layer = PlayerSelfPlayer;
+            foreach (Transform child in transform)
+            {
+                child.gameObject.layer = PlayerSelfPlayer;
+            }
         }
         else
         {
