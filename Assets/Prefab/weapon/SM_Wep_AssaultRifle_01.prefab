@@ -269,6 +269,11 @@ MonoBehaviour:
   _componentIndexCache: 0
   _addedNetworkObject: {fileID: 868913397871229316}
   _networkObjectCache: {fileID: 868913397871229316}
+  damage: 0
+  MaxRange: 20
+  WeaponHitLayers:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &868913397871229316
 MonoBehaviour:
   m_ObjectHideFlags: 0
