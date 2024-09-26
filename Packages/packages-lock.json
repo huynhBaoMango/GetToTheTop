@@ -1,10 +1,33 @@
 {
   "dependencies": {
+    "com.heathen.steamworksfoundation": {
+      "version": "https://github.com/heathen-engineering/Toolkit-for-Steamworks-Foundation.git?path=Unity/com.heathen.steamworksfoundation",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "ed182e7482fd8b424dda4354de573afe9d7dc596"
+    },
+    "com.heathen.systemcore": {
+      "version": "https://github.com/heathen-engineering/SystemCore.git?path=/com.heathen.systemcore",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.mathematics": "1.2.5"
+      },
+      "hash": "1bd810cf432c0d1324efe8e94b160879ce32fabc"
+    },
     "com.merry-yellow.code-assist": {
       "version": "file:com.merry-yellow.code-assist",
       "depth": 0,
       "source": "embedded",
       "dependencies": {}
+    },
+    "com.rlabrecque.steamworks.net": {
+      "version": "https://github.com/rlabrecque/Steamworks.NET.git?path=/com.rlabrecque.steamworks.net",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "a2fc889ab2672981ec3e6225d551d86ce6923121"
     },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
