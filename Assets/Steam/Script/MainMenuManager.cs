@@ -13,13 +13,14 @@ public class MainMenuManager : MonoBehaviour
 
     [SerializeField] private TMP_InputField lobbyInput;
     [SerializeField] private TextMeshProUGUI lobbyTitle, lobbyIDText;
-    [SerializeField] private GameObject pnLobby, pnJoin;
+    [SerializeField] private GameObject pnLobby, pnJoin, btStart;
 
     public static void LobbyEntered(string lobbyName, bool isHost)
     {
         instance.lobbyTitle.text = lobbyName;
         instance.lobbyIDText.text = BoostrapManager.CurrentLobbyID.ToString();
         instance.NewGameButton();
+        instance.btStart.SetActive(isHost);
     }
 
     public void NewGameButton()
