@@ -4156,6 +4156,7 @@ MonoBehaviour:
   lobbyIDText: {fileID: 89468815}
   pnLobby: {fileID: 419835773}
   pnJoin: {fileID: 1181619828}
+  btStart: {fileID: 1131524072}
 --- !u!1 &1217154484
 GameObject:
   m_ObjectHideFlags: 0
