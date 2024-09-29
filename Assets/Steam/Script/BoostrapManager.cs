@@ -69,7 +69,10 @@ public class BoostrapManager : MonoBehaviour
     public static void JoinByID(CSteamID steamID)
     {
         Debug.Log("Trying join ID: " +  steamID.m_SteamID);
-        if(SteamMatchmaking.RequestLobbyData(steamID)) SteamMatchmaking.JoinLobby(steamID);
+        if (SteamMatchmaking.RequestLobbyData(steamID))
+        {
+            SteamMatchmaking.JoinLobby(steamID);
+        }
         else Debug.Log("Failed to join ID: " + steamID.m_SteamID);
     }
 

@@ -13,18 +13,32 @@ public class MainMenuManager : MonoBehaviour
 
     [SerializeField] private TMP_InputField lobbyInput;
     [SerializeField] private TextMeshProUGUI lobbyTitle, lobbyIDText;
+    [SerializeField] private GameObject pnLobby, pnJoin;
 
     public static void LobbyEntered(string lobbyName, bool isHost)
     {
         instance.lobbyTitle.text = lobbyName;
         instance.lobbyIDText.text = BoostrapManager.CurrentLobbyID.ToString();
-
+        instance.NewGameButton();
     }
+
+    public void NewGameButton()
+    {
+        CloseAllPanels();
+        pnLobby.SetActive(true);
+    }
+
 
     public void CreateLobby()
     {
+        
         BoostrapManager.CreateLobby();
-        Debug.Log("Click");
+    }
+
+    public void JoinLobbyButton()
+    {
+        CloseAllPanels();
+        pnJoin.SetActive(true);
     }
 
     public void JoinLobby()
@@ -38,5 +52,10 @@ public class MainMenuManager : MonoBehaviour
         BoostrapManager.LeaveLobby();
     }
 
+    public void CloseAllPanels()
+    {
+        pnJoin.SetActive(false);
+        pnLobby.SetActive(false);
+    }
     
 }
