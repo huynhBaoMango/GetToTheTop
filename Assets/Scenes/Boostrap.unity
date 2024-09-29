@@ -214,7 +214,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04fb721c12edb6543a4f412bb5f85298, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  menuName: JoinLobby
+  menuName: Menu
   _networkManager: {fileID: 7443408887282543039}
   _fishySteamworks: {fileID: 7443408887282543041}
 --- !u!114 &7443408887282543025

@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Boostrap.unity
     guid: 252f1191f14096b409a5b10c8021be57
+  - enabled: 1
+    path: Assets/Scenes/Menu.unity
+    guid: 2f3e72b4d23610f44ac7e4bf604a5819
   m_configObjects: {}
