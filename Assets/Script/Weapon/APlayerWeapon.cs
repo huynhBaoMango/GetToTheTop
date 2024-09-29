@@ -4,14 +4,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using FishNet.Connection;
 using FishNet.Object;
+using FishNet.Component.Animating;
 
 public abstract class APlayerWeapon : NetworkBehaviour
 {
     public int damage;
     public float MaxRange = 20f;
     public LayerMask WeaponHitLayers;
-
     private Transform _cameraTransform;
+    private Animator animator;
 
     private void Awake()
     {
@@ -28,9 +29,12 @@ public abstract class APlayerWeapon : NetworkBehaviour
 
         if (hit.transform.TryGetComponent(out PlayerHealth health))
         {
-            health.TakeDamege(damage); // G?i TakeDamage thay vì TakeDamege
+            health.TakeDamege(damage);
+          
         }
     }
+      
+
 
     public abstract void AnimateWeapon();
 }

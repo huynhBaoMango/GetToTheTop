@@ -33,7 +33,7 @@ public class PlayerController : NetworkBehaviour
     private Animator animator;
     [SerializeField]
     private List<GameObject> playerModels = new List<GameObject>();
-
+    //[SerializeField] private Transform rightHandTransform;
     public override void OnStartClient()
     {
         base.OnStartClient();
@@ -45,11 +45,7 @@ public class PlayerController : NetworkBehaviour
             playerCamera.transform.position = new Vector3(transform.position.x, transform.position.y + cameraYOffset, transform.position.z);
             playerCamera.transform.SetParent(transform);
 
-            // Ki?m tra và kh?i t?o v? khí c?a player
-            if (TryGetComponent(out PlayerWeapone playerWeapon))
-                playerWeapon.InitializeWeapons(playerCamera.transform);
-
-            // ??t l?p cho player ch? s? h?u
+            
             gameObject.layer = PlayerSelfLayer;
             foreach (var obj in playerModels)
             {
@@ -94,26 +90,22 @@ public class PlayerController : NetworkBehaviour
 
         moveDirection = (forward * curSpeedX) + (right * curSpeedY);
 
-        // X? lý nh?y
-        if (Input.GetButton("Jump") && canMove && characterController.isGrounded)
-        {
-            moveDirection.y = jumpSpeed;
-        }
-        else
-        {
-            moveDirection.y = movementDirectionY;
-        }
-
-        // Áp d?ng l?c tr?ng l?c
+       
+    
+        
         if (!characterController.isGrounded)
         {
             moveDirection.y -= gravity * Time.deltaTime;
         }
+        if (Input.GetKeyDown("r") )
+        {
+            animator.SetTrigger("Reload");
+        }
 
-        // Di chuy?n player
+
         characterController.Move(moveDirection * Time.deltaTime);
 
-        // ?i?u khi?n xoay camera và nhân v?t
+        
         if (canMove && playerCamera != null)
         {
             rotationX += -Input.GetAxis("Mouse Y") * lookSpeed;
@@ -122,7 +114,7 @@ public class PlayerController : NetworkBehaviour
             transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0);
         }
 
-        // C?p nh?t animator (n?u có)
+        
         Vector3 localVelocity = transform.InverseTransformDirection(characterController.velocity);
         animator.SetFloat("VelocityX", localVelocity.x);
         animator.SetFloat("VelocityZ", localVelocity.z);

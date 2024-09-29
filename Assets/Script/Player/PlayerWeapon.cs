@@ -1,21 +1,23 @@
-using FishNet.Object;
-using System.Collections;
+﻿using FishNet.Object;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using FishNet.Object;
 using FishNet.Object.Synchronizing;
-using UnityEditor;
+
 public class PlayerWeapone : NetworkBehaviour
 {
     [SerializeField] private List<APlayerWeapon> weapons = new List<APlayerWeapon>();
-    [SerializeField] private APlayerWeapon currentWeapon;
+    [SerializeField] private APlayerWeapon currentWeapon; // Không cần SyncVar nữa
 
-    private readonly SyncVar<int> _currentWeaponIndex = new(-1);
     private void Awake()
     {
-        _currentWeaponIndex.OnChange += OncurrentWeaponIndexChanged;
+        // Khởi tạo currentWeapon với vũ khí đầu tiên trong danh sách
+        if (weapons.Count > 0)
+        {
+            currentWeapon = weapons[0];
+            currentWeapon.gameObject.SetActive(true); // Kích hoạt vũ khí đầu tiên
+        }
     }
+
     public override void OnStartClient()
     {
         base.OnStartClient();
@@ -25,40 +27,25 @@ public class PlayerWeapone : NetworkBehaviour
             return;
         }
     }
+
     private void Update()
     {
         if (Input.GetKeyUp(KeyCode.Mouse0))
             FireWeapon();
+        
     }
 
-    public void InitializeWeapons(Transform parrentOfWeapons)
-    {
-        for (int i = 0; i < weapons.Count; i++)
-
-            weapons[i].transform.SetParent(parrentOfWeapons);
-
-        InitializeWeapon(0);
-    }
-    public void InitializeWeapon(int weaponIndex)
-    {
-        SetWeaponIndex(weaponIndex);
-    }
-    [ServerRpc] private void SetWeaponIndex(int weaponIndex) => _currentWeaponIndex.Value = weaponIndex;
-    private void OncurrentWeaponIndexChanged(int oldIndex, int NewIndex, bool assServer)
-    {
-        for (int i = 0; i < weapons.Count; i++)
-            weapons[i].gameObject.SetActive(false);
-
-        if (weapons.Count > NewIndex)
-        {
-            currentWeapon = weapons[NewIndex];
-            currentWeapon.gameObject.SetActive(true);
-        }
-    }
+    // Loại bỏ các hàm InitializeWeapons, InitializeWeapon, SetWeaponIndex, OncurrentWeaponIndexChanged
 
     private void FireWeapon()
     {
-        currentWeapon.Fire();
+        if (currentWeapon != null)
+        {
+            currentWeapon.Fire();
+        }
+        else
+        {
+            Debug.LogError("Không có vũ khí nào được trang bị!");
+        }
     }
-
 }
