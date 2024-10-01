@@ -679,9 +679,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MainMenuManager, Assembly-CSharp
-        m_MethodName: JoinLobby
+      - m_Target: {fileID: 1515577902}
+        m_TargetAssemblyTypeName: MainMenuManagerNOSTEAM, Assembly-CSharp
+        m_MethodName: OnClick_Client
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3070,13 +3070,26 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MainMenuManager, Assembly-CSharp
-        m_MethodName: CreateLobby
+      - m_Target: {fileID: 1515577902}
+        m_TargetAssemblyTypeName: MainMenuManagerNOSTEAM, Assembly-CSharp
+        m_MethodName: OnClick_Server
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1217154489}
+        m_TargetAssemblyTypeName: MenuCam, Assembly-CSharp
+        m_MethodName: UpdateCamera
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1033825909}
+          m_ObjectArgumentAssemblyTypeName: Cinemachine.CinemachineVirtualCamera,
+            Cinemachine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -3539,7 +3552,20 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1115958745}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1217154489}
+        m_TargetAssemblyTypeName: MenuCam, Assembly-CSharp
+        m_MethodName: UpdateCamera
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 187647724}
+          m_ObjectArgumentAssemblyTypeName: Cinemachine.CinemachineVirtualCamera,
+            Cinemachine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1115958745
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3660,7 +3686,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1131524075}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1515577902}
+        m_TargetAssemblyTypeName: MainMenuManagerNOSTEAM, Assembly-CSharp
+        m_MethodName: OnClickStartGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1131524075
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3899,10 +3937,10 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MainMenuManager, Assembly-CSharp
-        m_MethodName: JoinLobbyButton
-        m_Mode: 1
+      - m_Target: {fileID: 419835773}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -3910,6 +3948,18 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1181619828}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
         m_CallState: 2
 --- !u!114 &1177773005
 MonoBehaviour:
@@ -4035,7 +4085,6 @@ GameObject:
   - component: {fileID: 1189358911}
   - component: {fileID: 1189358910}
   - component: {fileID: 1189358912}
-  - component: {fileID: 1189358913}
   m_Layer: 5
   m_Name: Menu
   m_TagString: Untagged
@@ -4130,24 +4179,6 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!114 &1189358913
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1189358908}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a6ed0e27777b9342b57aabea42c4d95, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lobbyInput: {fileID: 0}
-  lobbyTitle: {fileID: 0}
-  lobbyIDText: {fileID: 0}
-  pnLobby: {fileID: 0}
-  pnJoin: {fileID: 0}
-  btStart: {fileID: 0}
 --- !u!1 &1217154484
 GameObject:
   m_ObjectHideFlags: 0
