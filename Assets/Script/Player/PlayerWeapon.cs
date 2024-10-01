@@ -7,6 +7,7 @@ public class PlayerWeapone : NetworkBehaviour
 {
     [SerializeField] private List<APlayerWeapon> weapons = new List<APlayerWeapon>();
     [SerializeField] private APlayerWeapon currentWeapon; // Không cần SyncVar nữa
+    [SerializeField] private Animator animator; // Thêm Animator
 
     private void Awake()
     {
@@ -30,18 +31,22 @@ public class PlayerWeapone : NetworkBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyUp(KeyCode.Mouse0))
+        if (Input.GetKey(KeyCode.Mouse0))
             FireWeapon();
-        
     }
-
-    // Loại bỏ các hàm InitializeWeapons, InitializeWeapon, SetWeaponIndex, OncurrentWeaponIndexChanged
 
     private void FireWeapon()
     {
         if (currentWeapon != null)
         {
             currentWeapon.Fire();
+
+            // Kích hoạt animation bắn
+            if (animator != null)
+            {
+                animator.SetTrigger("shot"); // Kích hoạt trigger cho animation bắn
+                Debug.Log("Animation shot được kích hoạt");
+            }
         }
         else
         {

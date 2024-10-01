@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using FishNet.Connection;
@@ -17,7 +17,8 @@ public class PlayerController : NetworkBehaviour
     private CharacterController characterController;
     private Vector3 moveDirection = Vector3.zero;
     private float rotationX = 0f;
-
+    [SerializeField]
+    private GameObject headObject;
     [HideInInspector]
     public bool canMove = true;
 
@@ -28,7 +29,7 @@ public class PlayerController : NetworkBehaviour
     [Header("Animator Setup")]
     public Animation anim;
     [SerializeField]
-    private int PlayerSelfLayer = 7; // L?p c?a ch�nh player
+    private int PlayerSelfLayer = 7; // L?p c?a chính player
     [SerializeField]
     private Animator animator;
     [SerializeField]
@@ -38,14 +39,16 @@ public class PlayerController : NetworkBehaviour
     {
         base.OnStartClient();
 
-        // Ki?m tra n?u ?�y l� player ch? s? h?u
+        // Ki?m tra n?u ?ây là player ch? s? h?u
         if (base.IsOwner)
         {
             playerCamera = Camera.main;
             playerCamera.transform.position = new Vector3(transform.position.x, transform.position.y + cameraYOffset, transform.position.z);
             playerCamera.transform.SetParent(transform);
+            playerCamera.transform.position = transform.position + new Vector3(0.067f, 1.6f, 0.40f);
+            headObject.SetActive(false);
 
-            
+
             gameObject.layer = PlayerSelfLayer;
             foreach (var obj in playerModels)
             {
@@ -54,7 +57,8 @@ public class PlayerController : NetworkBehaviour
         }
         else
         {
-            gameObject.GetComponent<PlayerController>().enabled = false; // T?t script PlayerController cho c�c player kh�ng ph?i ch? s? h?u
+            headObject.SetActive(true);
+            gameObject.GetComponent<PlayerController>().enabled = false; // T?t script PlayerController cho các player không ph?i ch? s? h?u
         }
     }
 
@@ -62,50 +66,53 @@ public class PlayerController : NetworkBehaviour
     {
         characterController = GetComponent<CharacterController>();
 
-        // Kh�a con tr? chu?t
+        // Khóa con tr? chu?t
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false; // ?n con tr? chu?t
     }
 
     void Update()
     {
-        if (base.IsOwner)  // Ki?m tra n?u ?�y l� player ch? s? h?u
+        if (base.IsOwner)  // Ki?m tra n?u ?ây là player ch? s? h?u
         {
-            HandleMovement(); // X? l� di chuy?n
+            HandleMovement(); // X? lý di chuy?n
 
-            // G?i v? tr� c?a player l�n server
+            // G?i v? trí c?a player lên server
             UpdateServerPosition(transform.position);
         }
     }
 
     private void HandleMovement()
     {
-        bool isRunning = Input.GetKey(KeyCode.LeftShift); // Ki?m tra n?u ?ang ch?y
+        // Kiểm tra xem có đang chạy hay không
+        bool isRunning = Input.GetKey(KeyCode.LeftShift); // Kiểm tra nếu đang chạy
         Vector3 forward = transform.TransformDirection(Vector3.forward);
         Vector3 right = transform.TransformDirection(Vector3.right);
 
+        // Tính tốc độ dựa trên trạng thái chạy
         float curSpeedX = canMove ? (isRunning ? runningSpeed : walkingSpeed) * Input.GetAxis("Vertical") : 0;
         float curSpeedY = canMove ? (isRunning ? runningSpeed : walkingSpeed) * Input.GetAxis("Horizontal") : 0;
         float movementDirectionY = moveDirection.y;
 
+        // Tính toán hướng di chuyển
         moveDirection = (forward * curSpeedX) + (right * curSpeedY);
 
-       
-    
-        
+        // Xử lý trọng lực
         if (!characterController.isGrounded)
         {
             moveDirection.y -= gravity * Time.deltaTime;
         }
-        if (Input.GetKeyDown("r") )
+
+        // Xử lý reload
+        if (Input.GetKeyDown("r"))
         {
-            animator.SetTrigger("Reload");
+            ReloadAnimationServerRpc();
         }
 
-
+        // Cập nhật di chuyển của nhân vật
         characterController.Move(moveDirection * Time.deltaTime);
 
-        
+        // Cập nhật góc nhìn của camera
         if (canMove && playerCamera != null)
         {
             rotationX += -Input.GetAxis("Mouse Y") * lookSpeed;
@@ -114,31 +121,46 @@ public class PlayerController : NetworkBehaviour
             transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0);
         }
 
-        
+        // Cập nhật animator
         Vector3 localVelocity = transform.InverseTransformDirection(characterController.velocity);
         animator.SetFloat("VelocityX", localVelocity.x);
         animator.SetFloat("VelocityZ", localVelocity.z);
+        animator.SetBool("IsRunning", isRunning); // Thêm để kiểm tra trạng thái chạy
     }
 
-    // G?i v? tr� c?a client l�n server
+
+    // G?i v? trí c?a client lên server
     [ServerRpc]
     private void UpdateServerPosition(Vector3 newPosition)
     {
-        // C?p nh?t v? tr� tr�n server
+        // C?p nh?t v? trí trên server
         transform.position = newPosition;
 
-        // Ph�t l?i v? tr� cho t?t c? c�c client
+        // Phát l?i v? trí cho t?t c? các client
         UpdateClientPosition(newPosition);
     }
+    [ServerRpc]
+    public void ReloadAnimationServerRpc()
+    {
+        // Phát lệnh cho các client thực hiện animation Reload
+        ReloadAnimationClientRpc();
+    }
 
-    // Server ph�t l?i v? tr� c?a player cho t?t c? client
+    [ObserversRpc]
+    private void ReloadAnimationClientRpc()
+    {
+        animator.SetTrigger("Reload");
+    }
+
+    // Server phát l?i v? trí c?a player cho t?t c? client
     [ObserversRpc]
     private void UpdateClientPosition(Vector3 newPosition)
     {
-        // C?p nh?t v? tr� cho c�c client kh�c (kh�ng c?p nh?t cho player ch? s? h?u)
+        // C?p nh?t v? trí cho các client khác (không c?p nh?t cho player ch? s? h?u)
         if (!base.IsOwner)
         {
             transform.position = newPosition;
         }
     }
+
 }
