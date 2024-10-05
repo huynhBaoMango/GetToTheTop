@@ -10,6 +10,7 @@ public class FirebaseAuthManager : MonoBehaviour
     public TMP_InputField emailInput;
     public TMP_InputField passwordInput;
     public TMP_InputField confirmPasswordInput;
+    public TMP_InputField usernameInput;
     public TextMeshProUGUI feedbackText;
 
     private string apiKey = "AIzaSyA7kIAGmNwyJIJsS9x8uOjln8wDZ_wyDLo";
@@ -20,21 +21,22 @@ public class FirebaseAuthManager : MonoBehaviour
         string email = emailInput.text;
         string password = passwordInput.text;
         string confirmPassword = confirmPasswordInput.text;
+        string username = usernameInput.text;
 
         //Kiểm tra điều kiện đăng kí 
         if (password != confirmPassword) {
             feedbackText.text = "Password do not match!";
             return;
         }
-        if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password) || string.IsNullOrEmpty(confirmPassword))
+        if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password) || string.IsNullOrEmpty(confirmPassword) || string.IsNullOrEmpty(username))
         {
             feedbackText.text = "Please input both email and password";
             return;
         }
-        StartCoroutine(RegisterNewUser(email, password));
+        StartCoroutine(RegisterNewUser(email, password, username));
     }
 
-    IEnumerator RegisterNewUser(string email, string password)
+    IEnumerator RegisterNewUser(string email, string password, string username)
     {
         string url = "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=" + apiKey;
         string json = "{\"email\":\"" + email + "\",\"password\":\"" + password + "\",\"returnSecureToken\":true}";
@@ -43,7 +45,7 @@ public class FirebaseAuthManager : MonoBehaviour
         byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(json);
         request.uploadHandler = new UploadHandlerRaw(bodyRaw);
         request.downloadHandler = new DownloadHandlerBuffer();
-        request.SetRequestHeader("Content-Type", "application/json");
+        request.SetRequestHeader("Content-Type", "application/json");   
 
         yield return request.SendWebRequest();
 
@@ -51,7 +53,7 @@ public class FirebaseAuthManager : MonoBehaviour
         {
             feedbackText.text = "User registered successfully!";
             var responseData = JsonUtility.FromJson<FirebaseAuthRespone>(request.downloadHandler.text);
-            StartCoroutine(AddUserToDatabase(responseData.localId, email));  // Thêm vào Realtime Database
+            StartCoroutine(AddUserToDatabase(responseData.localId, email, username, 1000)); // Thêm vào Realtime Database
         }
         else
         {
@@ -60,10 +62,12 @@ public class FirebaseAuthManager : MonoBehaviour
     }
 
     // Thêm người dùng vào Realtime Database
-    IEnumerator AddUserToDatabase(string userId, string email)
+    IEnumerator AddUserToDatabase(string userId, string email, string username, int coin)
     {
         string databaseUrl = "https://projectm-91ec6-default-rtdb.firebaseio.com/User/" + userId + ".json";
-        User newUser = new User(email, "default_username", "password");
+        User newUser = new User(email, username, "password", 1000);
+        newUser.ownedSkins = new List<string>();
+        newUser.selectedSkin = null;
 
         string json = JsonUtility.ToJson(newUser);
         UnityWebRequest request = new UnityWebRequest(databaseUrl, "PUT");
@@ -94,7 +98,7 @@ public class FirebaseAuthManager : MonoBehaviour
         string email = emailInput.text;
         string password = passwordInput.text;
 
-        if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(email))
+        if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
         {
             feedbackText.text = "Please input both email and password";
             return;
@@ -120,6 +124,9 @@ public class FirebaseAuthManager : MonoBehaviour
             feedbackText.text = "User logged in successfully!";
             var responseData = JsonUtility.FromJson<FirebaseAuthRespone>(request.downloadHandler.text);
             // Tiếp tục với thông tin người dùng sau khi đăng nhập thành công (vd: lưu token, localId...)
+            PlayerPrefs.SetString("idToken", responseData.idToken);
+            PlayerPrefs.SetString("userId", responseData.localId);
+            PlayerPrefs.Save();
         }
         else
         {
