@@ -53,7 +53,7 @@ public class ThirPersonShottercontroller : MonoBehaviour
             thirdPersonController.SetRotateOnMove(true);
             animator.SetLayerWeight(1, Mathf.Lerp(animator.GetLayerWeight(1), 0f, Time.deltaTime * 10f));
         }
-           if(starterAssetsInputs.shoot)
+        if(starterAssetsInputs.shoot)
         {
             Vector3 aimDir = (mouseWorldPosition - SpawnBullletPosition.position).normalized;
             Instantiate(pfBullletProjectite,SpawnBullletPosition.position,Quaternion.LookRotation(aimDir,Vector3.up));

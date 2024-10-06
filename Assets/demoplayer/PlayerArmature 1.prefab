@@ -704,7 +704,7 @@ MonoBehaviour:
   jump: 0
   aim: 0
   sprint: 0
-  shoot: 0
+  shoot: 1
   analogMovement: 0
   cursorLocked: 1
   cursorInputForLook: 1
