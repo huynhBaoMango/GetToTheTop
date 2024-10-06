@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BulletProjectile : MonoBehaviour
 {
-    [SerializeField] private float speed = 10f;
+    [SerializeField] private float speed = 1000f;
     [SerializeField] private float lifetime = 5f;
     private Rigidbody bulletRigidbody;
 
@@ -16,8 +16,12 @@ public class BulletProjectile : MonoBehaviour
     private void Start()
     {
         bulletRigidbody.velocity = transform.forward * speed;
-        Debug.Log("Bullet Direction: " + transform.forward); // Ki?m tra h??ng
+        Debug.Log("Bullet Direction: " + transform.forward);
         StartCoroutine(DestroyAfterLifetime());
+    }
+    private void FixedUpdate()
+    {
+        bulletRigidbody.velocity = transform.forward * speed * Time.fixedDeltaTime;
     }
 
     private void OnTriggerEnter(Collider other)

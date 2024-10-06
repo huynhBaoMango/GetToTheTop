@@ -1,4 +1,4 @@
-﻿using HeathenEngineering.SteamworksIntegration.API;
+﻿
 using IO.Swagger.Model;
 using Newtonsoft.Json;
 using System;
