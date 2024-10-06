@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 using TMPro;
-
+using UnityEngine.SceneManagement;
 public class FirebaseAuthManager : MonoBehaviour
 {
     public TMP_InputField emailInput;
@@ -53,6 +53,15 @@ public class FirebaseAuthManager : MonoBehaviour
         {
             feedbackText.text = "User registered successfully!";
             var responseData = JsonUtility.FromJson<FirebaseAuthRespone>(request.downloadHandler.text);
+
+            // Lưu userId và idToken vào PlayerPrefs
+            PlayerPrefs.SetString("userId", responseData.localId);
+            PlayerPrefs.SetString("idToken", responseData.idToken);
+
+            // Lưu username vào PlayerPrefs
+            PlayerPrefs.SetString("username", username);
+            PlayerPrefs.SetString("email", email);
+            PlayerPrefs.Save();
             StartCoroutine(AddUserToDatabase(responseData.localId, email, username, 1000)); // Thêm vào Realtime Database
         }
         else
@@ -124,13 +133,39 @@ public class FirebaseAuthManager : MonoBehaviour
             feedbackText.text = "User logged in successfully!";
             var responseData = JsonUtility.FromJson<FirebaseAuthRespone>(request.downloadHandler.text);
             // Tiếp tục với thông tin người dùng sau khi đăng nhập thành công (vd: lưu token, localId...)
-            PlayerPrefs.SetString("idToken", responseData.idToken);
-            PlayerPrefs.SetString("userId", responseData.localId);
-            PlayerPrefs.Save();
+            //PlayerPrefs.SetString("idToken", responseData.idToken);
+            //PlayerPrefs.SetString("userId", responseData.localId);
+            //PlayerPrefs.Save();
+
+
+            // Lấy thông tin người dùng từ Firebase Database và lưu username
+            //StartCoroutine(GetUsernameFromDatabase(responseData.localId));
+
+            SceneManager.LoadScene("Menu");
         }
         else
         {
             feedbackText.text = "Login failed: " + request.error;
         }
     }
+
+
+    // Hàm lấy username từ Firebase Database
+    //IEnumerator GetUsernameFromDatabase(string userId)
+    //{
+    //    string databaseUrl = "https://projectm-91ec6-default-rtdb.firebaseio.com/User/" + userId + ".json";
+    //    UnityWebRequest request = UnityWebRequest.Get(databaseUrl);
+    //    yield return request.SendWebRequest();
+
+    //    if (request.result == UnityWebRequest.Result.Success)
+    //    {
+    //        var responseData = JsonUtility.FromJson<User>(request.downloadHandler.text);
+    //        PlayerPrefs.SetString("username", responseData.username);  // Lưu username vào PlayerPrefs
+    //        PlayerPrefs.Save();
+    //    }
+    //    else
+    //    {
+    //        Debug.LogError("Failed to fetch user data: " + request.error);
+    //    }
+    //}
 }
