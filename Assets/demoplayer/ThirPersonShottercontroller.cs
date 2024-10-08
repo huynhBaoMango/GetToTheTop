@@ -25,39 +25,63 @@ public class ThirPersonShottercontroller : MonoBehaviour
         starterAssetsInputs = GetComponent<StarterAssetsInputs>();
         animator = GetComponent<Animator>();
     }
+
     private void Update()
     {
+
         Vector3 mouseWorldPosition = Vector3.zero;
         Vector2 ScreenCenterPoint = new Vector2(Screen.width / 2f, Screen.height / 2f);
+
+
         Ray ray = Camera.main.ScreenPointToRay(ScreenCenterPoint);
         if (Physics.Raycast(ray, out RaycastHit raycastHit, 999f, aimColliderLayerMask))
         {
             debugTransform.position = raycastHit.point;
             mouseWorldPosition = raycastHit.point;
         }
+
+
         if (starterAssetsInputs.aim)
         {
             aimVirtualcamera.gameObject.SetActive(true);
             thirdPersonController.SetSentivity(aimSensitivity);
             thirdPersonController.SetRotateOnMove(false);
+
             Vector3 worldAimTarget = mouseWorldPosition;
-            worldAimTarget.y= transform.position.y;
-            animator.SetLayerWeight(1,Mathf.Lerp(animator.GetLayerWeight(1),1f,Time.deltaTime*10f));
+            worldAimTarget.y = transform.position.y;
+
+
+            animator.SetLayerWeight(1, Mathf.Lerp(animator.GetLayerWeight(1), 1f, Time.deltaTime * 10f));
+
+
             Vector3 aimDirection = (worldAimTarget - transform.position).normalized;
-            transform.forward = Vector3.Lerp(transform.forward,aimDirection, Time.deltaTime*20f);
+            transform.forward = Vector3.Lerp(transform.forward, aimDirection, Time.deltaTime * 20f);
         }
         else
         {
+
             aimVirtualcamera.gameObject.SetActive(false);
             thirdPersonController.SetSentivity(normalSensitivity);
             thirdPersonController.SetRotateOnMove(true);
+
+
             animator.SetLayerWeight(1, Mathf.Lerp(animator.GetLayerWeight(1), 0f, Time.deltaTime * 10f));
         }
-        if(starterAssetsInputs.shoot)
+
+
+        if (starterAssetsInputs.shoot)
         {
-            Vector3 aimDir = (mouseWorldPosition - SpawnBullletPosition.position).normalized;
-            Instantiate(pfBullletProjectite,SpawnBullletPosition.position,Quaternion.LookRotation(aimDir,Vector3.up));
+            Shoot(mouseWorldPosition);
             starterAssetsInputs.shoot = false;
-        }    
+        }
+    }
+
+
+    private void Shoot(Vector3 targetPosition)
+    {
+        Vector3 aimDir = (targetPosition - SpawnBullletPosition.position).normalized;
+
+
+        Instantiate(pfBullletProjectite, SpawnBullletPosition.position, Quaternion.LookRotation(aimDir, Vector3.up));
     }
 }
