@@ -70,9 +70,10 @@ public class Common : MonoBehaviour
 
 
     // Hàm cập nhật thông tin người dùng trong Firebase
-    private void UpdateUserInDatabase(User user)
+    public void UpdateUserInDatabase(User user)
     {
-        string databaseUrl = "https://projectm-91ec6-default-rtdb.firebaseio.com/User/" + user.email + ".json";
+        string userId = PlayerPrefs.GetString("userId");
+        string databaseUrl = "https://projectm-91ec6-default-rtdb.firebaseio.com/User/" + userId + ".json";
         string json = JsonUtility.ToJson(user);
 
         StartCoroutine(UpdateUserCoroutine(databaseUrl, json));
@@ -95,6 +96,38 @@ public class Common : MonoBehaviour
         else
         {
             Debug.LogError("Failed to update user in database: " + request.error);
+        }
+    }
+
+    // Hàm tải skins từ Firebase
+    public void LoadSkinsFromDatabase(Action<List<Skin>> onSkinsLoaded)
+    {
+        string databaseUrl = "https://projectm-91ec6-default-rtdb.firebaseio.com/Skin.json"; // URL đến danh sách skins
+        StartCoroutine(LoadSkinsCoroutine(databaseUrl, onSkinsLoaded));
+    }
+
+    // Coroutine để tải skins từ Firebase
+    private IEnumerator LoadSkinsCoroutine(string url, Action<List<Skin>> onSkinsLoaded)
+    {
+        // Tạo yêu cầu GET đến Firebase
+        UnityWebRequest request = UnityWebRequest.Get(url);
+        yield return request.SendWebRequest();
+
+        if (request.result == UnityWebRequest.Result.Success)
+        {
+            // Chuyển đổi JSON trả về thành danh sách Skin
+            string json = request.downloadHandler.text;
+
+            // Sử dụng Newtonsoft.Json để chuyển đổi
+            var skinDict = JsonConvert.DeserializeObject<Dictionary<string, Skin>>(json);
+            List<Skin> skins = new List<Skin>(skinDict.Values); // Lưu danh sách skin vào biến skins
+
+            onSkinsLoaded?.Invoke(skins); // Gọi callback với danh sách skins đã tải
+        }
+        else
+        {
+            Debug.LogError("Failed to load skins: " + request.error);
+            onSkinsLoaded?.Invoke(new List<Skin>()); // Gọi callback với danh sách rỗng nếu có lỗi
         }
     }
 }

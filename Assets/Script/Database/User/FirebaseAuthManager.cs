@@ -148,24 +148,4 @@ public class FirebaseAuthManager : MonoBehaviour
             feedbackText.text = "Login failed: " + request.error;
         }
     }
-
-
-    // Hàm lấy username từ Firebase Database
-    //IEnumerator GetUsernameFromDatabase(string userId)
-    //{
-    //    string databaseUrl = "https://projectm-91ec6-default-rtdb.firebaseio.com/User/" + userId + ".json";
-    //    UnityWebRequest request = UnityWebRequest.Get(databaseUrl);
-    //    yield return request.SendWebRequest();
-
-    //    if (request.result == UnityWebRequest.Result.Success)
-    //    {
-    //        var responseData = JsonUtility.FromJson<User>(request.downloadHandler.text);
-    //        PlayerPrefs.SetString("username", responseData.username);  // Lưu username vào PlayerPrefs
-    //        PlayerPrefs.Save();
-    //    }
-    //    else
-    //    {
-    //        Debug.LogError("Failed to fetch user data: " + request.error);
-    //    }
-    //}
 }

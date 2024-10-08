@@ -13,7 +13,7 @@ public class Skin
         this.skinName = skinName;
         this.price = price;
         this.assetPath = assetPath;
-        this.isPurchased = false;
+        this.isPurchased = isPurchased;
     }
 }
     
