@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class BulletProjectile : MonoBehaviour
 {
-    [SerializeField] private float speed = 1000f;
-    [SerializeField] private float lifetime = 5f;
+
+    [SerializeField] private Transform vfxHitGreen;
+    [SerializeField] private Transform vfxHitRed;
+
     private Rigidbody bulletRigidbody;
 
     private void Awake()
@@ -15,23 +17,23 @@ public class BulletProjectile : MonoBehaviour
 
     private void Start()
     {
+        float speed = 50f;
         bulletRigidbody.velocity = transform.forward * speed;
-        Debug.Log("Bullet Direction: " + transform.forward);
-        StartCoroutine(DestroyAfterLifetime());
-    }
-    private void FixedUpdate()
-    {
-        bulletRigidbody.velocity = transform.forward * speed * Time.fixedDeltaTime;
     }
 
     private void OnTriggerEnter(Collider other)
     {
+        if (other.GetComponent<BulletTarget>() != null)
+        {
+            // Hit target
+            Instantiate(vfxHitGreen, transform.position, Quaternion.identity);
+        }
+        else
+        {
+            // Hit something else
+            Instantiate(vfxHitRed, transform.position, Quaternion.identity);
+        }
         Destroy(gameObject);
     }
 
-    private IEnumerator DestroyAfterLifetime()
-    {
-        yield return new WaitForSeconds(lifetime);
-        Destroy(gameObject);
-    }
 }
