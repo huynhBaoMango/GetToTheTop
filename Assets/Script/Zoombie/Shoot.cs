@@ -6,16 +6,20 @@ public class Shoot : MonoBehaviour
 {
     [SerializeField]
     private float _maximumForce;
+
     [SerializeField]
     private float _maximumForceTime;
+    
     private float _timeMouseButtonDown;
+    
     private Camera _camera;
-
-    private void Awake()
+    
+    void Awake()
     {
         _camera = GetComponent<Camera>();
     }
 
+    // Update is called once per frame
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
@@ -23,24 +27,27 @@ public class Shoot : MonoBehaviour
             _timeMouseButtonDown = Time.time;
         }
 
-        if (Input.GetMouseButtonUp(0)) // Ki?m tra khi nút chu?t ???c nh?
+        if (Input.GetMouseButtonUp(0))
         {
             Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out RaycastHit hitInfo)) // G?i Raycast ?úng cách
+             
+            if (Physics.Raycast(ray, out RaycastHit hitInfo))
             {
-                Zoombie zoombie = hitInfo.collider.GetComponentInParent<Zoombie>();
-                if (zoombie != null)
+                Zombie zombie = hitInfo.collider.GetComponentInParent<Zombie>();
+                 
+                if (zombie != null)
                 {
                     float mouseButtonDownDuration = Time.time - _timeMouseButtonDown;
                     float forcePercentage = mouseButtonDownDuration / _maximumForceTime;
                     float forceMagnitude = Mathf.Lerp(1, _maximumForce, forcePercentage);
 
-                    Vector3 forceDirection = (zoombie.transform.position - _camera.transform.position).normalized;
+                    Vector3 forceDirection = zombie.transform.position - _camera.transform.position;
+                    forceDirection.y = 1;
+                    forceDirection.Normalize();
 
                     Vector3 force = forceMagnitude * forceDirection;
 
-                    // S? d?ng hitInfo.point thay vì hitInfo
-                    zoombie.TriggerRagdoll(force, hitInfo.point);
+                    zombie.TriggerRagdoll(force, hitInfo.point);
                 }
             }
         }
