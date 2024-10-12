@@ -8,6 +8,7 @@ public class RoomNode : Node
         this.BottomRightAreaCorner = new Vector2Int(topRightAreaCorner.x, bottomLeftAreaCorner.y);
         this.TopLeftAreaCorner = new Vector2Int(bottomLeftAreaCorner.x, TopRightAreaCorner.y);
         this.TreeLayerIndex = index;
+        this.thisMeshType = Node.NodeType.Room;
     }
 
     public int Width { get => (int)(TopRightAreaCorner.x - BottomLeftAreaCorner.x); }

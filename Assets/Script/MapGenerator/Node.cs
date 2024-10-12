@@ -15,8 +15,9 @@ public abstract class Node
 
     public Node Parent { get; set; }
 
-
     public int TreeLayerIndex { get; set; }
+
+    public NodeType thisMeshType { get; set; }
 
     public Node(Node parentNode)
     {
@@ -37,5 +38,11 @@ public abstract class Node
     public void RemoveChild(Node node)
     {
         childrenNodeList.Remove(node);
+    }
+
+    public enum NodeType
+    { 
+        Room,
+        Corridor
     }
 }

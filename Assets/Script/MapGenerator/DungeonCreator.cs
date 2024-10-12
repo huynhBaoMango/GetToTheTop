@@ -22,6 +22,7 @@ public class DungeonCreator : MonoBehaviour
     List<Vector3Int> possibleDoorHorizontalPosition;
     List<Vector3Int> possibleWallHorizontalPosition;
     List<Vector3Int> possibleWallVerticalPosition;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -48,7 +49,7 @@ public class DungeonCreator : MonoBehaviour
         possibleWallVerticalPosition = new List<Vector3Int>();
         for (int i = 0; i < listOfRooms.Count; i++)
         {
-            CreateMesh(listOfRooms[i].BottomLeftAreaCorner, listOfRooms[i].TopRightAreaCorner);
+            CreateMesh(listOfRooms[i].BottomLeftAreaCorner, listOfRooms[i].TopRightAreaCorner, listOfRooms[i].thisMeshType);
         }
         CreateWalls(wallParent);
     }
@@ -70,7 +71,7 @@ public class DungeonCreator : MonoBehaviour
         Instantiate(wallPrefab, wallPosition, Quaternion.identity, wallParent.transform);
     }
 
-    private void CreateMesh(Vector2 bottomLeftCorner, Vector2 topRightCorner)
+    private void CreateMesh(Vector2 bottomLeftCorner, Vector2 topRightCorner, Node.NodeType thistype)
     {
         Vector3 bottomLeftV = new Vector3(bottomLeftCorner.x, 0, bottomLeftCorner.y);
         Vector3 bottomRightV = new Vector3(topRightCorner.x, 0, bottomLeftCorner.y);
@@ -106,6 +107,10 @@ public class DungeonCreator : MonoBehaviour
         mesh.triangles = triangles;
 
         GameObject dungeonFloor = new GameObject("Mesh" + bottomLeftCorner, typeof(MeshFilter), typeof(MeshRenderer));
+        if (thistype.Equals(Node.NodeType.Room))
+        {
+            var GridDrawer = dungeonFloor.AddComponent<GridDrawer>();
+        }
 
         dungeonFloor.transform.position = Vector3.zero;
         dungeonFloor.transform.localScale = Vector3.one;
@@ -147,6 +152,8 @@ public class DungeonCreator : MonoBehaviour
             wallList.Add(point);
         }
     }
+
+    
 
     private void DestroyAllChildren()
     {

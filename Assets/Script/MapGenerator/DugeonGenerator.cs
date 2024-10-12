@@ -9,6 +9,7 @@ public class DugeonGenerator
     private int dungeonWidth;
     private int dungeonLength;
 
+
     public DugeonGenerator(int dungeonWidth, int dungeonLength)
     {
         this.dungeonWidth = dungeonWidth;
@@ -25,9 +26,9 @@ public class DugeonGenerator
 
         RoomGenerator roomGenerator = new RoomGenerator(maxIterations, roomLengthMin, roomWidthMin);
         List<RoomNode> roomList = roomGenerator.GenerateRoomsInGivenSpaces(roomSpaces, roomBottomCornerModifier, roomTopCornerMidifier, roomOffset);
-
         CorridorsGenerator corridorGenerator = new CorridorsGenerator();
         var corridorList = corridorGenerator.CreateCorridor(allNodesCollection, corridorWidth);
+
         
         return new List<Node>(roomList).Concat(corridorList).ToList();
     }

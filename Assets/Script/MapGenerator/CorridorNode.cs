@@ -15,6 +15,7 @@ public class CorridorNode : Node
         this.structure1 = node1;
         this.structure2 = node2;
         this.corridorWidth = corridorWidth;
+        this.thisMeshType = NodeType.Corridor;
         GenerateCorridor();
     }
 
