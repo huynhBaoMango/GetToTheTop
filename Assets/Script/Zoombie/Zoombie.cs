@@ -52,7 +52,6 @@ public class Zombie : MonoBehaviour
     private Transform _hipsBone;
     private NavMeshAgent _navMeshAgent;
     private Transform _playerTarget;
-
     private BoneTransform[] _faceUpStandUpBoneTransforms;
     private BoneTransform[] _faceDownStandUpBoneTransforms;
     private BoneTransform[] _ragdollBoneTransforms;
@@ -116,6 +115,7 @@ public class Zombie : MonoBehaviour
         Rigidbody hitRigidbody = FindHitRigidbody(hitPoint);
         hitRigidbody.AddForceAtPosition(force, hitPoint, ForceMode.Impulse);
 
+        _navMeshAgent.enabled = false;  // Tắt NavMeshAgent khi ngã
         _currentState = ZombieState.Ragdoll;
         _timeToWakeUp = Random.Range(5, 10);
     }
@@ -148,6 +148,7 @@ public class Zombie : MonoBehaviour
 
         _animator.enabled = true;
         _characterController.enabled = true;
+        _navMeshAgent.enabled = true; // Bật lại NavMeshAgent khi đứng dậy
     }
 
     private void EnableRagdoll()
@@ -160,6 +161,7 @@ public class Zombie : MonoBehaviour
         _animator.enabled = false;
         _characterController.enabled = false;
     }
+
     private void WalkingBehaviour()
     {
         _navMeshAgent.isStopped = false;
@@ -185,7 +187,6 @@ public class Zombie : MonoBehaviour
             _isFacingUp = _hipsBone.forward.y > 0;
 
             AlignRotationToHips();
-            AlignPositionToHips();
 
             PopulateBoneTransforms(_ragdollBoneTransforms);
 
@@ -222,6 +223,12 @@ public class Zombie : MonoBehaviour
                 elapsedPercentage);
         }
 
+        
+        for (int boneIndex = 0; boneIndex < _bones.Length; boneIndex++)
+        {
+            _bones[boneIndex].localScale = Vector3.one;
+        }
+
         if (elapsedPercentage >= 1)
         {
             _currentState = ZombieState.StandingUp;
@@ -229,6 +236,7 @@ public class Zombie : MonoBehaviour
             _animator.Play(GetStandUpStateName(), 0, 0);
         }
     }
+
 
     private void AttackingBehaviour()
     {
@@ -243,8 +251,6 @@ public class Zombie : MonoBehaviour
             _animator.SetTrigger(_attackTriggerName);
         }
     }
-
-
 
     private void AlignRotationToHips()
     {
@@ -284,7 +290,14 @@ public class Zombie : MonoBehaviour
         }
 
         _hipsBone.position = originalHipsPosition;
+
+        
+        foreach (Transform bone in _bones)
+        {
+            bone.localScale = Vector3.one;
+        }
     }
+
 
     private void PopulateBoneTransforms(BoneTransform[] boneTransforms)
     {

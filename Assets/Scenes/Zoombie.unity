@@ -189,7 +189,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7f5acf926f56e5b429af1122a7db4d57, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.2
+      value: 5.37
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7f5acf926f56e5b429af1122a7db4d57, type: 3}
       propertyPath: m_LocalPosition.z
@@ -259,7 +259,7 @@ PrefabInstance:
       addedObject: {fileID: 1681031529}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 7f5acf926f56e5b429af1122a7db4d57, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1681031532}
+      addedObject: {fileID: 1681031535}
     - targetCorrespondingSourceObject: {fileID: 7311561063055367063, guid: 7f5acf926f56e5b429af1122a7db4d57, type: 3}
       insertIndex: -1
       addedObject: {fileID: 86968514}
@@ -751,7 +751,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
-  m_IsKinematic: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -815,7 +815,7 @@ CharacterJoint:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 347796497}
-  m_ConnectedBody: {fileID: 2124930669}
+  m_ConnectedBody: {fileID: 1486585459}
   m_ConnectedArticulationBody: {fileID: 0}
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: -1, y: 0, z: 0}
@@ -827,11 +827,11 @@ CharacterJoint:
     spring: 0
     damper: 0
   m_LowTwistLimit:
-    limit: -31.33462
+    limit: -19.875887
     bounciness: 0
     contactDistance: 0
   m_HighTwistLimit:
-    limit: 22.06979
+    limit: 28.657421
     bounciness: 0
     contactDistance: 0
   m_SwingLimitSpring:
@@ -1447,7 +1447,7 @@ SphereCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1028677501}
-  m_Material: {fileID: 13400000, guid: 730995acd141c6a43bbcba01b0b0db42, type: 2}
+  m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -2080,7 +2080,7 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0
   m_Center: {x: 0, y: 0.9, z: 0}
---- !u!195 &1681031532
+--- !u!195 &1681031535
 NavMeshAgent:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2215,6 +2215,7 @@ GameObject:
   - component: {fileID: 1983119631}
   - component: {fileID: 1983119630}
   - component: {fileID: 1983119629}
+  - component: {fileID: 1983119633}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -2302,12 +2303,39 @@ Transform:
   m_GameObject: {fileID: 1983119628}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.0001373291, y: 4.686615, z: 0.028320312}
+  m_LocalPosition: {x: -0.0001373291, y: 4.911, z: 0.028320312}
   m_LocalScale: {x: 500, y: 1, z: 500}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &1983119633
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1983119628}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &2124930667 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -1881965479880549823, guid: 7f5acf926f56e5b429af1122a7db4d57, type: 3}
