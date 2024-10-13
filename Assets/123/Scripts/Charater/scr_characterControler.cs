@@ -8,8 +8,10 @@ public class scr_characterControler : MonoBehaviour
 {
     private CharacterController characterController;
     private Defaultinput defaultInput;
-    private Vector2 input_Movement;
-    private Vector2 input_View;
+    [HideInInspector]
+    public Vector2 input_Movement;
+    [HideInInspector]
+    public Vector2 input_View;
 
     private Vector3 newCameraRotation;
     private Vector3 newCharacterRotation;
@@ -52,6 +54,9 @@ public class scr_characterControler : MonoBehaviour
     private Vector3 newMovementSpeedVelocity;
 
 
+    [Header("Weapon")]
+    public scr_WeaponComtroller currentWeapon;
+
 
 
 
@@ -77,6 +82,12 @@ public class scr_characterControler : MonoBehaviour
         characterController = GetComponent<CharacterController>();
 
         cameraHeight = cameraHolder.localPosition.y;
+
+        if (currentWeapon)
+        {
+            currentWeapon.Initialise(this);
+        }
+
     }
 
     private void Update()

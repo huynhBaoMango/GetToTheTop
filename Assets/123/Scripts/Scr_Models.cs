@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Experimental.GlobalIllumination;
 
 
 public class Scr_Models : MonoBehaviour
@@ -57,6 +58,34 @@ public class Scr_Models : MonoBehaviour
         public float CameraHeight;
         public CapsuleCollider StanceCollider;
     }
+
+    #endregion
+
+    #region - Weapons -
+
+    [Serializable]  
+    public class WeaponSettingModel
+    {
+        [Header("Weapon Sway")]
+        public float SwayAmount;
+        public bool SwayYInverted;
+        public bool SwayXInverted;
+        public float SwaySmoothing;
+        public float SwayResetSmooting;
+        public float SwayClampX;
+        public float SwayClampY;
+
+        [Header("Weapon Movement Sway")]
+        public float MovementSwayX;
+        public float MovementSwayY;
+        public bool MovementSwayYInverted;
+        public bool MovementSwayXInverted;
+        public float MovementSwaySmoothing;
+
+
+
+    }
+
 
     #endregion
 }
