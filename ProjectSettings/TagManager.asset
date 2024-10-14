@@ -6,6 +6,7 @@ TagManager:
   tags:
   - CinemachineTarget
   - _player
+  - Obstacle
   layers:
   - Default
   - TransparentFX
@@ -14,7 +15,7 @@ TagManager:
   - Water
   - UI
   - GroundWeapon
-  - 
+  - Obstacle
   - 
   - 
   - 
