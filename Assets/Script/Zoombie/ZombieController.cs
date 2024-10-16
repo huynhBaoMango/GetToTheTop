@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.AI;
+
 public class ZombieController
 {
     private enum ZombieState
@@ -32,7 +33,6 @@ public class ZombieController
     private CharacterController _characterController;
     private string _faceUpStandUpStateName;
     private string _faceDownStandUpStateName;
-    public event Action<Collider> OnObstacleDetected;
 
     public ZombieController(
         float timeToResetBones,
@@ -96,11 +96,10 @@ public class ZombieController
         _navMeshAgent.isStopped = false;
         _navMeshAgent.SetDestination(_playerTarget.position);
         _navMeshAgent.speed = _chaseSpeed;
+
         Vector3 directionToPlayer = (_playerTarget.position - _navMeshAgent.transform.position).normalized;
         Quaternion toRotation = Quaternion.LookRotation(directionToPlayer, Vector3.up);
         _navMeshAgent.transform.rotation = Quaternion.RotateTowards(_navMeshAgent.transform.rotation, toRotation, 20 * Time.deltaTime);
-
-        HandleObstacle();
 
         if (Vector3.Distance(_navMeshAgent.transform.position, _playerTarget.position) < 1.5f)
         {
@@ -108,7 +107,6 @@ public class ZombieController
             _currentState = ZombieState.Attacking;
         }
     }
-
 
     private void RagdollBehaviour()
     {
@@ -163,15 +161,7 @@ public class ZombieController
             _animator.Play(GetStandUpStateName(), 0, 0);
         }
     }
-    public void HandleObstacle()
-    {
-        RaycastHit hit;
-        if (Physics.Raycast(_navMeshAgent.transform.position, _navMeshAgent.transform.forward, out hit, 1f, LayerMask.GetMask("Obstacle")))
-        {
-            OnObstacleDetected?.Invoke(hit.collider);
-            _navMeshAgent.SetDestination(_playerTarget.position);
-        }
-    }
+
     private void AttackingBehaviour()
     {
         if (!_animator.GetCurrentAnimatorStateInfo(0).IsTag("Attack"))
@@ -193,7 +183,7 @@ public class ZombieController
         _currentState = ZombieState.Ragdoll;
     }
 
-        private void AlignRotationToHips()
+    private void AlignRotationToHips()
     {
         Vector3 originalHipsPosition = _hipsBone.position;
         Quaternion originalHipsRotation = _hipsBone.rotation;

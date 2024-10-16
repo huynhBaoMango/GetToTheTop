@@ -83,7 +83,7 @@ public class Zombie : MonoBehaviour
             _faceUpStandUpStateName,
             _faceDownStandUpStateName
         );
-        _zombieController.OnObstacleDetected += DestroyObstacle;
+
     }
 
     void Update()
@@ -99,10 +99,12 @@ public class Zombie : MonoBehaviour
         _navMeshAgent.enabled = false; // Disable NavMeshAgent when falling
         _zombieController.TriggerRagdoll();
     }
+
     private void DestroyObstacle(Collider obstacle)
     {
         Destroy(obstacle.gameObject);
     }
+
     private Rigidbody FindHitRigidbody(Vector3 hitPoint)
     {
         Rigidbody closestRigidbody = null;
