@@ -592,7 +592,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skinPrefab: {fileID: 2720375155602403680, guid: 0f8521a26578cee4181051d3c4d2eeae, type: 3}
   skinPanel: {fileID: 2007456418}
-  skins: []
+  skins:
+  - skinId: 
+    skinName: 
+    price: 0
+    assetPath: 
+    isPurchased: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
