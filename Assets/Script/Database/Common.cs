@@ -11,7 +11,18 @@ public class Common : MonoBehaviour
 {
 
     public static Common instance;
-    public void Awake() => instance = this;
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject); // Đảm bảo rằng object không bị hủy khi chuyển scene
+        }
+        else
+        {
+            Destroy(gameObject); // Hủy object này nếu đã có instance khác tồn tại
+        }
+    }
 
     //private List<Skin> skins = new List<Skin>();
 
@@ -117,12 +128,22 @@ public class Common : MonoBehaviour
         {
             // Chuyển đổi JSON trả về thành danh sách Skin
             string json = request.downloadHandler.text;
+            Debug.Log("Received JSON: " + json);
 
             // Sử dụng Newtonsoft.Json để chuyển đổi
             var skinDict = JsonConvert.DeserializeObject<Dictionary<string, Skin>>(json);
-            List<Skin> skins = new List<Skin>(skinDict.Values); // Lưu danh sách skin vào biến skins
+            if (skinDict != null)
+            {
+                List<Skin> skins = new List<Skin>(skinDict.Values);
+                onSkinsLoaded?.Invoke(skins);   // Gọi callback với danh sách skins đã tải
+            }
+            else
+            {
+                Debug.LogError("Failed to parse skin dictionary from JSON.");
+                onSkinsLoaded?.Invoke(new List<Skin>()); // Gọi callback với danh sách rỗng nếu có lỗi
+            }
 
-            onSkinsLoaded?.Invoke(skins); // Gọi callback với danh sách skins đã tải
+            
         }
         else
         {
