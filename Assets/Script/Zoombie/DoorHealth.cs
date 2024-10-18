@@ -2,14 +2,17 @@ using UnityEngine;
 
 public class DoorHealth : MonoBehaviour
 {
-    public int health = 100;
+    [SerializeField] private int _health = 10;
+    public int CurrentHealth => _health; // Thu?c tính ??c s?c kh?e hi?n t?i
 
-    public void TakeDamage(int damage)
+    public void TakeDamage()
     {
-        health -= damage;
-        if (health <= 0)
+        _health--;
+        Debug.Log("Obstacle Health: " + _health); // Thêm debug ?? ki?m tra
+        if (_health <= 0)
         {
             Destroy(gameObject);
         }
     }
 }
+

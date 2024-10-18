@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.AI;
-
+using System.Collections;
 public class ZombieController
 {
     private enum ZombieState
@@ -12,6 +12,10 @@ public class ZombieController
         ResettingBones,
         Attacking
     }
+    private bool isAttackingObstacle = false;
+    private float _obstacleDetectionRange = 0.2f; // Khoảng cách để phát hiện vật cản
+    private string _obstacleTag = "Obstacle"; // Tag của vật cản
+    private int _obstacleHealth = 1;
 
     private ZombieState _currentState = ZombieState.Walking;
     private float _timeToWakeUp;
@@ -75,6 +79,7 @@ public class ZombieController
         {
             case ZombieState.Walking:
                 WalkingBehaviour();
+                DetectAndAttackObstacles();
                 break;
             case ZombieState.Ragdoll:
                 RagdollBehaviour();
@@ -90,21 +95,70 @@ public class ZombieController
                 break;
         }
     }
-
     private void WalkingBehaviour()
     {
         _navMeshAgent.isStopped = false;
         _navMeshAgent.SetDestination(_playerTarget.position);
         _navMeshAgent.speed = _chaseSpeed;
-
         Vector3 directionToPlayer = (_playerTarget.position - _navMeshAgent.transform.position).normalized;
         Quaternion toRotation = Quaternion.LookRotation(directionToPlayer, Vector3.up);
         _navMeshAgent.transform.rotation = Quaternion.RotateTowards(_navMeshAgent.transform.rotation, toRotation, 20 * Time.deltaTime);
 
+        // Thay đổi khoảng cách để phát hiện vật cản
         if (Vector3.Distance(_navMeshAgent.transform.position, _playerTarget.position) < 1.5f)
         {
+            _navMeshAgent.isStopped = true;
             _animator.SetTrigger(_attackTriggerName);
             _currentState = ZombieState.Attacking;
+        }
+        else
+        {
+            DetectAndAttackObstacles(); // Gọi phương thức phát hiện và tấn công vật cản khi không tấn công player
+        }
+    }
+    private void AttackObstacle(Collider obstacle)
+    {
+        if (isAttackingObstacle) return; // Kiểm tra nếu đã tấn công, không gọi lại nữa
+
+        isAttackingObstacle = true; // Đặt cờ khi bắt đầu tấn công
+        _animator.SetTrigger(_attackTriggerName);
+        if (obstacle.TryGetComponent(out DoorHealth obstacleHealth))
+        {
+            CoroutineHelper.Instance.ExecuteCoroutine(DestroyObstacleAfterDelay(0.5f, obstacleHealth, obstacle));
+        }
+    }
+
+    private IEnumerator DestroyObstacleAfterDelay(float delay, DoorHealth obstacleHealth, Collider obstacle)
+    {
+        yield return new WaitForSeconds(delay);
+        if (obstacleHealth != null)
+        {
+            obstacleHealth.TakeDamage();
+            if (obstacleHealth.CurrentHealth > 0) // Kiểm tra nếu vật cản vẫn còn sức khỏe
+            {
+                // Gọi lại AttackObstacle để tiếp tục tấn công
+                isAttackingObstacle = false; // Đặt lại cờ để có thể tấn công lại
+                AttackObstacle(obstacle);
+            }
+            else
+            {
+                isAttackingObstacle = false; // Đặt lại cờ khi vật cản bị phá hủy
+            }
+        }
+    }
+
+    private void DetectAndAttackObstacles()
+    {
+        RaycastHit hit;
+        if (Physics.SphereCast(_navMeshAgent.transform.position, 0.5f, _navMeshAgent.transform.forward, out hit, _obstacleDetectionRange))
+        {
+            if (hit.collider.CompareTag(_obstacleTag))
+            {
+                if (!isAttackingObstacle) // Chỉ gọi tấn công nếu chưa tấn công
+                {
+                    AttackObstacle(hit.collider);
+                }
+            }
         }
     }
 
@@ -164,17 +218,15 @@ public class ZombieController
 
     private void AttackingBehaviour()
     {
-        if (!_animator.GetCurrentAnimatorStateInfo(0).IsTag("Attack"))
+        AnimatorStateInfo stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
+        if (!stateInfo.IsTag("Attack")) // Kiểm tra nếu animation tấn công không còn phát
         {
             _currentState = ZombieState.Walking;
             _navMeshAgent.isStopped = false;
-        }
-
-        if (Vector3.Distance(_navMeshAgent.transform.position, _playerTarget.position) < 1.5f)
-        {
-            _animator.SetTrigger(_attackTriggerName);
+            isAttackingObstacle = false; // Đặt lại cờ sau khi hoàn thành tấn công
         }
     }
+
 
     public void TriggerRagdoll()
     {
