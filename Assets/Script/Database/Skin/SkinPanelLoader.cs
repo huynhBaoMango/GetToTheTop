@@ -13,31 +13,52 @@ public class SkinPanelLoader : MonoBehaviour
 
     private void Start()
     {
+        if (skinPrefab == null)
+        {
+            Debug.LogError("skinPrefab is not assigned!");
+            return;
+        }
+
+        if (skinPanel == null)
+        {
+            Debug.LogError("skinPanel is not assigned!");
+            return;
+        }
+
+        //if (skins == null || skins.Count == 0)
+        //{
+        //    Debug.LogError("Skins list is null or empty!");
+        //    return;
+        //}
+        
+        Common.instance.LoadSkinsFromDatabase(OnSkinsLoaded);
+
         Debug.Log("Skin Prefab: " + skinPrefab);
         Debug.Log("Skin Panel: " + skinPanel);
         Debug.Log("Skins Count: " + (skins != null ? skins.Count.ToString() : "null"));
-        if (skins == null || skins.Count == 0)
-        {
-            Debug.LogError("Skins list is null or empty!");
-            return; // Không làm gì nếu danh sách skins rỗng
-        }
 
-        //Common.instance.LoadSkinsFromDatabase(OnSkinsLoaded);
-        LoadSkinToPanel();
+        
+        //LoadSkinToPanel();
     }
 
     //Hàm gọi khi skins đã được tải thành công
-    //private void OnSkinsLoaded(List<Skin> loadedSkins)
-    //{
-    //    skins = loadedSkins; // Lưu danh sách skins đã tải vào biến skins
-    //    Debug.Log("Skins loaded: " + skins.Count);
-    //    LoadSkinToPanel();   // Hiển thị skins trên panel
-    //}
+    private void OnSkinsLoaded(List<Skin> loadedSkins)
+    {
+        skins = loadedSkins; // Lưu danh sách skins đã tải vào biến skins
+        Debug.Log("Skins loaded: " + skins.Count);
+        LoadSkinToPanel();   // Hiển thị skins trên panel
+    }
 
 
     public void LoadSkinToPanel()
     {
+        foreach (Transform child in skinPanel)
+        {
+            Destroy(child.gameObject);
+        }
+
         Debug.Log("Loading skins to panel...");
+
         if (skins == null || skins.Count == 0)
         {
             Debug.LogError("Skins list is null or empty!");
@@ -46,45 +67,92 @@ public class SkinPanelLoader : MonoBehaviour
 
         foreach (var skin in skins)
         {
-            GameObject skinItem = Instantiate(skinPrefab, skinPanel);
-            Debug.Log("skinItem created: " + skinItem.name);
-            if (skinItem == null)
+            Debug.Log($"Skin Name: {skin.skinName}, Asset Path: {skin.assetPath}");
+
+            GameObject SkinItemPrefab = Instantiate(skinPrefab, skinPanel);
+            Debug.Log("skinItem created: " + SkinItemPrefab.name);
+
+            if (SkinItemPrefab == null)
             {
                 Debug.LogError("Failed to instantiate skinItem!");
                 continue;
             }
 
             //Set tên skin
-            //skinItem.transform.Find("skinNameText").GetComponent<TextMeshPro>().text = skin.skinName;
-            TextMeshPro skinNameText = skinItem.GetComponentInChildren<TextMeshPro>();
-            Debug.Log("skinNameText found: " + skinNameText);
-
-            if (skinNameText == null)
+            Transform nameTextTransform = SkinItemPrefab.transform.Find("skinNameText");
+            if (nameTextTransform != null)
             {
-                Debug.LogError("skinNameText not found in skinItem!");
+                TextMeshProUGUI skinNameText = nameTextTransform.GetComponent<TextMeshProUGUI>();
+                skinNameText.text = skin.skinName;
             }
             else
             {
-                skinNameText.text = skin.skinName;
+                Debug.LogError("Could not find skinNameText in skinItem.");
+            }
+
+            Transform priceTextTransform = SkinItemPrefab.transform.Find("skinPriceText");
+            if (priceTextTransform != null)
+            {
+                TextMeshProUGUI skinPriceText = priceTextTransform.GetComponent<TextMeshProUGUI>();
+                skinPriceText.text = "$" + skin.price;
             }
 
             //Set hình ảnh skin
-            Image skinImage = skinItem.GetComponentInChildren<Image>();
-            Debug.Log("skinImage found: " + skinImage);
-            Sprite skinSprite = Resources.Load<Sprite>(skin.assetPath); //Load từ assetPath
-
-            if (skinSprite != null)
+            Transform modelTransform = SkinItemPrefab.transform.Find("skinModel");
+            if (modelTransform != null)
             {
-                skinImage.sprite = skinSprite;
+                Debug.Log("modelTransform is not null");
+                GameObject skinModel = Resources.Load<GameObject>(skin.assetPath); // Load từ assetPath
+                Debug.Log("skinModel: " + skinModel);
+                if (skinModel != null)
+                {
+                    // Tạo model trong panel
+                    GameObject instantiatedModel = Instantiate(skinModel, modelTransform);
+                    instantiatedModel.transform.localPosition = Vector3.zero; // Đặt vị trí cho model
+                }
+                else
+                {
+                    Debug.LogError("3D model not found at: " + skin.assetPath);
+                }
             }
             else
             {
-                Debug.Log("Skin image not found at: " + skin.assetPath);
+                Debug.LogError("Could not find skinModel in skinItem.");
+            }
+
+            Transform imageTransform = SkinItemPrefab.transform.Find("skinImage");
+            if (imageTransform != null)
+            {
+                Debug.Log("imageTransform is not null");
+                Image skinImage = imageTransform.GetComponent<Image>();
+                Debug.Log("skinImage: " + skinImage);
+                Sprite skinSprite = Resources.Load<Sprite>(skin.imagePath); // Load từ assetPath
+                Debug.Log("skinSprite: " + skinSprite);
+                if (skinSprite != null)
+                {
+                    skinImage.sprite = skinSprite;
+                }
+                else
+                {
+                    Debug.LogError("Skin image not found at: " + skin.imagePath);
+                }
+            }
+            else
+            {
+                Debug.LogError("Could not find imgSkin in skinItem.");
             }
 
             //Nút mua skin
-            Button btnBuy = skinItem.GetComponent<Button>();
-            btnBuy.onClick.AddListener(() => OnBuySkinButton(skin));
+            Transform btnBuyTransform = SkinItemPrefab.transform.Find("btnBuySkin");
+            if (btnBuyTransform != null)
+            {
+                Button btnBuy = btnBuyTransform.GetComponent<Button>();
+                btnBuy.onClick.AddListener(() => OnBuySkinButton(skin));
+            }
+            else
+            {
+                Debug.LogError("Could not find BtnBuy in skinItem.");
+            }
         }
     }
 

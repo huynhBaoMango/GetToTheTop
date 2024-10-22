@@ -199,7 +199,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -514,8 +514,10 @@ GameObject:
   - component: {fileID: 2007456420}
   - component: {fileID: 2007456419}
   - component: {fileID: 2007456421}
+  - component: {fileID: 2007456422}
+  - component: {fileID: 2007456423}
   m_Layer: 5
-  m_Name: Panel
+  m_Name: pnSkinLoad
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -553,7 +555,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.392}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -590,9 +592,54 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57b31d98e80f4dd4f9833b287856c864, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skinPrefab: {fileID: 2720375155602403680, guid: 0f8521a26578cee4181051d3c4d2eeae, type: 3}
+  skinPrefab: {fileID: 2946291107917817699, guid: 7af0070678f1d3246a07dd3cc51ec35a, type: 3}
   skinPanel: {fileID: 2007456418}
+<<<<<<< Updated upstream
+  skins:
+  - skinId: 
+    skinName: 
+    price: 0
+    assetPath: 
+    isPurchased: 0
+=======
   skins: []
+--- !u!114 &2007456422
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2007456417}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a8695521f0d02e499659fee002a26c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 1
+  m_StartCorner: 0
+  m_StartAxis: 0
+  m_CellSize: {x: 275, y: 275}
+  m_Spacing: {x: 10, y: 10}
+  m_Constraint: 1
+  m_ConstraintCount: 3
+--- !u!114 &2007456423
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2007456417}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be8d0808de209684ea5b1b6cfeb17161, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+>>>>>>> Stashed changes
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
