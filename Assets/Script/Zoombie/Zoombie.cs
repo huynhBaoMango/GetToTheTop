@@ -3,119 +3,172 @@ using UnityEngine.AI;
 
 public class Zombie : MonoBehaviour
 {
-    private enum ZombieState
-    {
-        Walking,
-        Ragdoll,
-        StandingUp,
-        ResettingBones,
-        Attacking
-    }
+    [SerializeField]
+    private Camera _camera;
 
-    public ZombieAI zombieAI;
-    public ZombieMovement zombieMovement;
-    public ZombieAnimationManager zombieAnimationManager;
+    [SerializeField]
+    private string _faceUpStandUpStateName;
+
+    [SerializeField]
+    private string _faceDownStandUpStateName;
+
+    [SerializeField]
+    private string _faceUpStandUpClipName;
+
+    [SerializeField]
+    private string _faceDownStandUpClipName;
+
+    [SerializeField]
+    private string _attackTriggerName = "Attack";
+
+    [SerializeField]
+    private float _timeToResetBones;
+
     [SerializeField]
     private float _chaseSpeed = 3f;
-    private ZombieState _currentState = ZombieState.Walking;
-    private Transform _playerTarget;
-    private NavMeshAgent _navMeshAgent;
+
+    private Rigidbody[] _ragdollRigidbodies;
     private Animator _animator;
-    private float _timeToWakeUp;
+    private CharacterController _characterController;
     private Transform _hipsBone;
-    private float _elapsedResetBonesTime;
+    private NavMeshAgent _navMeshAgent;
+    private Transform _playerTarget;
+    private Transform[] _bones;
+    private BoneTransform[] _faceUpStandUpBoneTransforms;
+    private BoneTransform[] _faceDownStandUpBoneTransforms;
+    private BoneTransform[] _ragdollBoneTransforms;
 
-    private void Awake()
+    private ZombieController _zombieController;
+
+    void Awake()
     {
-        zombieAI = GetComponent<ZombieAI>();
-        zombieMovement = GetComponent<ZombieMovement>();
-        zombieAnimationManager = GetComponent<ZombieAnimationManager>();
-        _navMeshAgent = GetComponent<NavMeshAgent>();
+        _ragdollRigidbodies = GetComponentsInChildren<Rigidbody>();
         _animator = GetComponent<Animator>();
+        _characterController = GetComponent<CharacterController>();
         _hipsBone = _animator.GetBoneTransform(HumanBodyBones.Hips);
+        _navMeshAgent = GetComponent<NavMeshAgent>();
         _playerTarget = GameObject.FindGameObjectWithTag("Player").transform;
-        zombieAnimationManager.SetFacingDirection(_hipsBone.forward.y > 0);
+        _bones = _hipsBone.GetComponentsInChildren<Transform>();
+
+        _faceUpStandUpBoneTransforms = new BoneTransform[_bones.Length];
+        _faceDownStandUpBoneTransforms = new BoneTransform[_bones.Length];
+        _ragdollBoneTransforms = new BoneTransform[_bones.Length];
+
+        for (int boneIndex = 0; boneIndex < _bones.Length; boneIndex++)
+        {
+            _faceUpStandUpBoneTransforms[boneIndex] = new BoneTransform();
+            _faceDownStandUpBoneTransforms[boneIndex] = new BoneTransform();
+            _ragdollBoneTransforms[boneIndex] = new BoneTransform();
+        }
+
+        PopulateAnimationStartBoneTransforms(_faceUpStandUpClipName, _faceUpStandUpBoneTransforms);
+        PopulateAnimationStartBoneTransforms(_faceDownStandUpClipName, _faceDownStandUpBoneTransforms);
+        DisableRagdoll();
+
+        // Initialize the ZombieController with the necessary components
+        _zombieController = new ZombieController(
+            _timeToResetBones,
+            _bones,
+            _faceUpStandUpBoneTransforms,
+            _faceDownStandUpBoneTransforms,
+            _ragdollBoneTransforms,
+            _hipsBone,
+            _animator,
+            _navMeshAgent,
+            _playerTarget,
+            _chaseSpeed,
+            _attackTriggerName,
+            _ragdollRigidbodies,
+            _characterController,
+            _faceUpStandUpStateName,
+            _faceDownStandUpStateName
+        );
+
     }
 
-    private void Update()
+    void Update()
     {
-        switch (_currentState)
-        {
-            case ZombieState.Walking:
-                zombieMovement.Move();
-                break;
-            case ZombieState.Ragdoll:
-                RagdollBehaviour();
-                break;
-            case ZombieState.StandingUp:
-                StandingUpBehaviour();
-                break;
-            case ZombieState.ResettingBones:
-                ResettingBonesBehaviour();
-                break;
-            case ZombieState.Attacking:
-                AttackingBehaviour();
-                break;
-        }
-
-        zombieAI.UpdateAI();
+        _zombieController.Update();
     }
 
-    private void RagdollBehaviour()
+    public void TriggerRagdoll(Vector3 force, Vector3 hitPoint)
     {
-        _timeToWakeUp -= Time.deltaTime;
-        if (_timeToWakeUp <= 0)
-        {
-            _currentState = ZombieState.ResettingBones;
-            _elapsedResetBonesTime = 0;
-        }
+        EnableRagdoll();
+        Rigidbody hitRigidbody = FindHitRigidbody(hitPoint);
+        hitRigidbody.AddForceAtPosition(force, hitPoint, ForceMode.Impulse);
+        _navMeshAgent.enabled = false; // Disable NavMeshAgent when falling
+        _zombieController.TriggerRagdoll();
     }
 
-    private void StandingUpBehaviour()
+    private void DestroyObstacle(Collider obstacle)
     {
-        if (_animator.GetCurrentAnimatorStateInfo(0).IsName(zombieAnimationManager.GetStandUpStateName()) == false)
-        {
-            _currentState = ZombieState.Walking;
-        }
+        Destroy(obstacle.gameObject);
     }
 
-    private void ResettingBonesBehaviour()
+    private Rigidbody FindHitRigidbody(Vector3 hitPoint)
     {
-        _elapsedResetBonesTime += Time.deltaTime;
-        float elapsedPercentage = _elapsedResetBonesTime / zombieAnimationManager._timeToResetBones;
-        BoneTransform[] standUpBoneTransforms = zombieAnimationManager.GetStandUpBoneTransforms();
+        Rigidbody closestRigidbody = null;
+        float closestDistance = 0;
 
-        for (int boneIndex = 0; boneIndex < zombieAnimationManager._bones.Length; boneIndex++)
+        foreach (var rigidbody in _ragdollRigidbodies)
         {
-            zombieAnimationManager._bones[boneIndex].localPosition = Vector3.Lerp(
-                zombieAnimationManager._ragdollBoneTransforms[boneIndex].Position,
-                standUpBoneTransforms[boneIndex].Position,
-                elapsedPercentage);
-            zombieAnimationManager._bones[boneIndex].localRotation = Quaternion.Lerp(
-                zombieAnimationManager._ragdollBoneTransforms[boneIndex].Rotation,
-                standUpBoneTransforms[boneIndex].Rotation,
-                elapsedPercentage);
+            float distance = Vector3.Distance(rigidbody.position, hitPoint);
+            if (closestRigidbody == null || distance < closestDistance)
+            {
+                closestDistance = distance;
+                closestRigidbody = rigidbody;
+            }
         }
 
-        if (elapsedPercentage >= 1)
-        {
-            _currentState = ZombieState.StandingUp;
-            zombieAnimationManager.DisableRagdoll();
-            _animator.Play(zombieAnimationManager.GetStandUpStateName(), 0, 0);
-        }
+        return closestRigidbody;
     }
 
-    private void AttackingBehaviour()
+    private void DisableRagdoll()
     {
-        if (!_animator.GetCurrentAnimatorStateInfo(0).IsTag("Attack"))
+        foreach (var rigidbody in _ragdollRigidbodies)
         {
-            _currentState = ZombieState.Walking;
-            _navMeshAgent.isStopped = false;
+            rigidbody.isKinematic = true;
         }
-        if (Vector3.Distance(transform.position, _playerTarget.position) < 1.5f)
+        _animator.enabled = true;
+        _characterController.enabled = true;
+        _navMeshAgent.enabled = true; // Re-enable NavMeshAgent when standing up
+    }
+
+    private void EnableRagdoll()
+    {
+        foreach (var rigidbody in _ragdollRigidbodies)
         {
-            _animator.SetTrigger(zombieAnimationManager._attackTriggerName);
+            rigidbody.isKinematic = false;
+        }
+        _animator.enabled = false;
+        _characterController.enabled = false;
+    }
+
+    private void PopulateBoneTransforms(BoneTransform[] boneTransforms)
+    {
+        for (int boneIndex = 0; boneIndex < _bones.Length; boneIndex++)
+        {
+            boneTransforms[boneIndex].Position = _bones[boneIndex].localPosition;
+            boneTransforms[boneIndex].Rotation = _bones[boneIndex].localRotation;
         }
     }
 
+    private void PopulateAnimationStartBoneTransforms(string clipName, BoneTransform[] boneTransforms)
+    {
+        Vector3 positionBeforeSampling = transform.position;
+        Quaternion rotationBeforeSampling = transform.rotation;
+
+        foreach (AnimationClip clip in _animator.runtimeAnimatorController.animationClips)
+        {
+            if (clip.name == clipName)
+            {
+                clip.SampleAnimation(gameObject, 0);
+                PopulateBoneTransforms(boneTransforms);
+                break;
+            }
+        }
+
+        transform.position = positionBeforeSampling;
+        transform.rotation = rotationBeforeSampling;
+    }
 }
