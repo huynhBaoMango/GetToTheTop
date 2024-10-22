@@ -6,6 +6,7 @@ using UnityEngine.AI;
 public class Zombie : MonoBehaviour
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
     [SerializeField]
     private Camera _camera;
 
@@ -74,12 +75,31 @@ public class Zombie : MonoBehaviour
     private CharacterController _characterController;
     private Transform _hipsBone;
     private NavMeshAgent _navMeshAgent;
-    private Transform _playerTarget;
-    private Transform[] _bones;
-    private BoneTransform[] _faceUpStandUpBoneTransforms;
-    private BoneTransform[] _faceDownStandUpBoneTransforms;
-    private BoneTransform[] _ragdollBoneTransforms;
+=======
+    private enum ZombieState
+    {
+        Walking,
+        Ragdoll,
+        StandingUp,
+        ResettingBones,
+        Attacking
+    }
 
+    public ZombieAI zombieAI;
+    public ZombieMovement zombieMovement;
+    public ZombieAnimationManager zombieAnimationManager;
+    [SerializeField]
+    private float _chaseSpeed = 3f;
+    private ZombieState _currentState = ZombieState.Walking;
+>>>>>>> parent of f4a3bda3 (Merge remote-tracking branch 'origin/nghi_zombie')
+    private Transform _playerTarget;
+    private NavMeshAgent _navMeshAgent;
+    private Animator _animator;
+    private float _timeToWakeUp;
+    private Transform _hipsBone;
+    private float _elapsedResetBonesTime;
+
+<<<<<<< HEAD
     private ZombieController _zombieController;
 
 =======
@@ -99,13 +119,18 @@ public class Zombie : MonoBehaviour
 
 >>>>>>> parent of 2c2ac15e (Merge branch 'Nghi_zoombie')
     void Awake()
+=======
+    private void Awake()
+>>>>>>> parent of f4a3bda3 (Merge remote-tracking branch 'origin/nghi_zombie')
     {
-        _ragdollRigidbodies = GetComponentsInChildren<Rigidbody>();
-        _animator = GetComponent<Animator>();
-        _characterController = GetComponent<CharacterController>();
-        _hipsBone = _animator.GetBoneTransform(HumanBodyBones.Hips);
+        zombieAI = GetComponent<ZombieAI>();
+        zombieMovement = GetComponent<ZombieMovement>();
+        zombieAnimationManager = GetComponent<ZombieAnimationManager>();
         _navMeshAgent = GetComponent<NavMeshAgent>();
+        _animator = GetComponent<Animator>();
+        _hipsBone = _animator.GetBoneTransform(HumanBodyBones.Hips);
         _playerTarget = GameObject.FindGameObjectWithTag("Player").transform;
+<<<<<<< HEAD
 <<<<<<< HEAD
         _bones = _hipsBone.GetComponentsInChildren<Transform>();
 
@@ -172,6 +197,17 @@ public class Zombie : MonoBehaviour
         {
             case ZombieState.Walking:
                 WalkingBehaviour();
+=======
+        zombieAnimationManager.SetFacingDirection(_hipsBone.forward.y > 0);
+    }
+
+    private void Update()
+    {
+        switch (_currentState)
+        {
+            case ZombieState.Walking:
+                zombieMovement.Move();
+>>>>>>> parent of f4a3bda3 (Merge remote-tracking branch 'origin/nghi_zombie')
                 break;
             case ZombieState.Ragdoll:
                 RagdollBehaviour();
@@ -184,6 +220,7 @@ public class Zombie : MonoBehaviour
                 break;
             case ZombieState.Attacking:
                 AttackingBehaviour();
+<<<<<<< HEAD
                 break;
         }
     }
@@ -450,13 +487,14 @@ public class Zombie : MonoBehaviour
             {
                 clip.SampleAnimation(gameObject, 0);
                 PopulateBoneTransforms(boneTransforms);
+=======
+>>>>>>> parent of f4a3bda3 (Merge remote-tracking branch 'origin/nghi_zombie')
                 break;
-            }
         }
 
-        transform.position = positionBeforeSampling;
-        transform.rotation = rotationBeforeSampling;
+        zombieAI.UpdateAI();
     }
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 
@@ -470,4 +508,64 @@ public class Zombie : MonoBehaviour
         return _isFacingUp ? _faceUpStandUpBoneTransforms : _faceDownStandUpBoneTransforms;
     }
 >>>>>>> parent of 2c2ac15e (Merge branch 'Nghi_zoombie')
+=======
+
+    private void RagdollBehaviour()
+    {
+        _timeToWakeUp -= Time.deltaTime;
+        if (_timeToWakeUp <= 0)
+        {
+            _currentState = ZombieState.ResettingBones;
+            _elapsedResetBonesTime = 0;
+        }
+    }
+
+    private void StandingUpBehaviour()
+    {
+        if (_animator.GetCurrentAnimatorStateInfo(0).IsName(zombieAnimationManager.GetStandUpStateName()) == false)
+        {
+            _currentState = ZombieState.Walking;
+        }
+    }
+
+    private void ResettingBonesBehaviour()
+    {
+        _elapsedResetBonesTime += Time.deltaTime;
+        float elapsedPercentage = _elapsedResetBonesTime / zombieAnimationManager._timeToResetBones;
+        BoneTransform[] standUpBoneTransforms = zombieAnimationManager.GetStandUpBoneTransforms();
+
+        for (int boneIndex = 0; boneIndex < zombieAnimationManager._bones.Length; boneIndex++)
+        {
+            zombieAnimationManager._bones[boneIndex].localPosition = Vector3.Lerp(
+                zombieAnimationManager._ragdollBoneTransforms[boneIndex].Position,
+                standUpBoneTransforms[boneIndex].Position,
+                elapsedPercentage);
+            zombieAnimationManager._bones[boneIndex].localRotation = Quaternion.Lerp(
+                zombieAnimationManager._ragdollBoneTransforms[boneIndex].Rotation,
+                standUpBoneTransforms[boneIndex].Rotation,
+                elapsedPercentage);
+        }
+
+        if (elapsedPercentage >= 1)
+        {
+            _currentState = ZombieState.StandingUp;
+            zombieAnimationManager.DisableRagdoll();
+            _animator.Play(zombieAnimationManager.GetStandUpStateName(), 0, 0);
+        }
+    }
+
+    private void AttackingBehaviour()
+    {
+        if (!_animator.GetCurrentAnimatorStateInfo(0).IsTag("Attack"))
+        {
+            _currentState = ZombieState.Walking;
+            _navMeshAgent.isStopped = false;
+        }
+        if (Vector3.Distance(transform.position, _playerTarget.position) < 1.5f)
+        {
+            _animator.SetTrigger(zombieAnimationManager._attackTriggerName);
+        }
+    }
+
+>>>>>>> parent of f4a3bda3 (Merge remote-tracking branch 'origin/nghi_zombie')
 }

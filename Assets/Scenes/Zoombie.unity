@@ -756,6 +756,7 @@ Rigidbody:
   m_Constraints: 0
   m_CollisionDetection: 0
 <<<<<<< HEAD
+<<<<<<< HEAD
 --- !u!1 &459840442
 GameObject:
 =======
@@ -951,6 +952,8 @@ Transform:
   m_MassScale: 1
   m_ConnectedMassScale: 1
 >>>>>>> parent of 2c2ac15e (Merge branch 'Nghi_zoombie')
+=======
+>>>>>>> parent of f4a3bda3 (Merge remote-tracking branch 'origin/nghi_zombie')
 --- !u!1 &511428880
 GameObject:
   m_ObjectHideFlags: 0
@@ -1103,6 +1106,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maximumForce: 2
   _maximumForceTime: 1000
+<<<<<<< HEAD
 <<<<<<< HEAD
 --- !u!1 &773119933
 GameObject:
@@ -1910,6 +1914,8 @@ Transform:
   m_MassScale: 1
   m_ConnectedMassScale: 1
 >>>>>>> parent of 2c2ac15e (Merge branch 'Nghi_zoombie')
+=======
+>>>>>>> parent of f4a3bda3 (Merge remote-tracking branch 'origin/nghi_zombie')
 --- !u!1 &1096797757
 GameObject:
   m_ObjectHideFlags: 0
@@ -2029,6 +2035,7 @@ MonoBehaviour:
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
 <<<<<<< HEAD
+<<<<<<< HEAD
 --- !u!1 &1144674864
 GameObject:
 =======
@@ -2039,10 +2046,20 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
 --- !u!136 &1200299170
 CapsuleCollider:
+=======
+--- !u!1 &1681031526 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3616752654071506690, guid: 2975d75c13aba4749a16f07dec8ba01a, type: 3}
+  m_PrefabInstance: {fileID: 2684573642203158070}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1681031538
+MonoBehaviour:
+>>>>>>> parent of f4a3bda3 (Merge remote-tracking branch 'origin/nghi_zombie')
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+<<<<<<< HEAD
   m_GameObject: {fileID: 1200299168}
   m_Material: {fileID: 13400000, guid: 730995acd141c6a43bbcba01b0b0db42, type: 2}
   m_IncludeLayers:
@@ -2553,108 +2570,47 @@ GameObject:
 --- !u!54 &1974472494
 Rigidbody:
 >>>>>>> parent of 2c2ac15e (Merge branch 'Nghi_zoombie')
+=======
+  m_GameObject: {fileID: 1681031526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 323e8a90feea3654ea5cf2a2aa5de5a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _faceUpStandUpStateName: Face Up Stand Up
+  _faceDownStandUpStateName: Face Down Stand Up
+  _faceUpStandUpClipName: Stand Up
+  _faceDownStandUpClipName: Standing Up
+  _timeToResetBones: 0.3
+  _attackTriggerName: Attack
+  _bones: []
+--- !u!114 &1681031539
+MonoBehaviour:
+>>>>>>> parent of f4a3bda3 (Merge remote-tracking branch 'origin/nghi_zombie')
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
 <<<<<<< HEAD
+<<<<<<< HEAD
   m_GameObject: {fileID: 1144674864}
+=======
+  m_GameObject: {fileID: 1681031526}
+>>>>>>> parent of f4a3bda3 (Merge remote-tracking branch 'origin/nghi_zombie')
   m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &1144674867
-MeshFilter:
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15d564ba84baa5344a054337074b0daf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1681031540
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1144674864}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!4 &1144674868
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1144674864}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.73901826, z: -0, w: 0.67368543}
-  m_LocalPosition: {x: 8, y: 4.911, z: 11}
-  m_LocalScale: {x: 10, y: 20, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 95.296, z: 0}
---- !u!1 &1688893441
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1688893445}
-  - component: {fileID: 1688893444}
-  - component: {fileID: 1688893443}
-  - component: {fileID: 1688893442}
-  - component: {fileID: 1688893446}
-  m_Layer: 0
-  m_Name: Cube (3)
-  m_TagString: Obstacle
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!65 &1688893442
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1688893441}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
+  m_GameObject: {fileID: 1681031526}
   m_Enabled: 1
+<<<<<<< HEAD
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -2947,6 +2903,14 @@ CapsuleCollider:
   m_Direction: 1
   m_Center: {x: 0, y: 0.13459478, z: 0}
 >>>>>>> parent of 2c2ac15e (Merge branch 'Nghi_zoombie')
+=======
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7cb1de97426e3d4b9309ef6689b24da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  detectionRange: 10
+  attackRange: 1.5
+>>>>>>> parent of f4a3bda3 (Merge remote-tracking branch 'origin/nghi_zombie')
 --- !u!1 &1983119628
 GameObject:
   m_ObjectHideFlags: 0
@@ -3081,7 +3045,11 @@ Rigidbody:
   m_Constraints: 0
   m_CollisionDetection: 0
 <<<<<<< HEAD
+<<<<<<< HEAD
 --- !u!1001 &19253760808846760
+=======
+--- !u!1001 &2684573642203158070
+>>>>>>> parent of f4a3bda3 (Merge remote-tracking branch 'origin/nghi_zombie')
 PrefabInstance:
 =======
 --- !u!1 &2124930667 stripped
@@ -3136,58 +3104,75 @@ CharacterJoint:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4415483211823930741, guid: 2975d75c13aba4749a16f07dec8ba01a, type: 3}
-      propertyPath: _camera
+    - target: {fileID: 2295613642207708437, guid: 2975d75c13aba4749a16f07dec8ba01a, type: 3}
+      propertyPath: zombieAI
       value: 
-      objectReference: {fileID: 511428882}
-    - target: {fileID: 5839375456238344291, guid: 2975d75c13aba4749a16f07dec8ba01a, type: 3}
+      objectReference: {fileID: 1681031540}
+    - target: {fileID: 2295613642207708437, guid: 2975d75c13aba4749a16f07dec8ba01a, type: 3}
+      propertyPath: zombieMovement
+      value: 
+      objectReference: {fileID: 1681031539}
+    - target: {fileID: 2295613642207708437, guid: 2975d75c13aba4749a16f07dec8ba01a, type: 3}
+      propertyPath: zombieAnimationManager
+      value: 
+      objectReference: {fileID: 1681031538}
+    - target: {fileID: 3616752654071506690, guid: 2975d75c13aba4749a16f07dec8ba01a, type: 3}
       propertyPath: m_Name
       value: zoombie
       objectReference: {fileID: 0}
-    - target: {fileID: 6503885772230804185, guid: 2975d75c13aba4749a16f07dec8ba01a, type: 3}
+    - target: {fileID: 4141791912947514808, guid: 2975d75c13aba4749a16f07dec8ba01a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6503885772230804185, guid: 2975d75c13aba4749a16f07dec8ba01a, type: 3}
+    - target: {fileID: 4141791912947514808, guid: 2975d75c13aba4749a16f07dec8ba01a, type: 3}
       propertyPath: m_LocalPosition.y
       value: 5.37
       objectReference: {fileID: 0}
-    - target: {fileID: 6503885772230804185, guid: 2975d75c13aba4749a16f07dec8ba01a, type: 3}
+    - target: {fileID: 4141791912947514808, guid: 2975d75c13aba4749a16f07dec8ba01a, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 4.74
+      value: 1.49
       objectReference: {fileID: 0}
-    - target: {fileID: 6503885772230804185, guid: 2975d75c13aba4749a16f07dec8ba01a, type: 3}
+    - target: {fileID: 4141791912947514808, guid: 2975d75c13aba4749a16f07dec8ba01a, type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 6503885772230804185, guid: 2975d75c13aba4749a16f07dec8ba01a, type: 3}
+    - target: {fileID: 4141791912947514808, guid: 2975d75c13aba4749a16f07dec8ba01a, type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6503885772230804185, guid: 2975d75c13aba4749a16f07dec8ba01a, type: 3}
+    - target: {fileID: 4141791912947514808, guid: 2975d75c13aba4749a16f07dec8ba01a, type: 3}
       propertyPath: m_LocalRotation.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6503885772230804185, guid: 2975d75c13aba4749a16f07dec8ba01a, type: 3}
+    - target: {fileID: 4141791912947514808, guid: 2975d75c13aba4749a16f07dec8ba01a, type: 3}
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6503885772230804185, guid: 2975d75c13aba4749a16f07dec8ba01a, type: 3}
+    - target: {fileID: 4141791912947514808, guid: 2975d75c13aba4749a16f07dec8ba01a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6503885772230804185, guid: 2975d75c13aba4749a16f07dec8ba01a, type: 3}
+    - target: {fileID: 4141791912947514808, guid: 2975d75c13aba4749a16f07dec8ba01a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6503885772230804185, guid: 2975d75c13aba4749a16f07dec8ba01a, type: 3}
+    - target: {fileID: 4141791912947514808, guid: 2975d75c13aba4749a16f07dec8ba01a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3616752654071506690, guid: 2975d75c13aba4749a16f07dec8ba01a, type: 3}
+      insertIndex: 2
+      addedObject: {fileID: 1681031540}
+    - targetCorrespondingSourceObject: {fileID: 3616752654071506690, guid: 2975d75c13aba4749a16f07dec8ba01a, type: 3}
+      insertIndex: 3
+      addedObject: {fileID: 1681031539}
+    - targetCorrespondingSourceObject: {fileID: 3616752654071506690, guid: 2975d75c13aba4749a16f07dec8ba01a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1681031538}
   m_SourcePrefab: {fileID: 100100000, guid: 2975d75c13aba4749a16f07dec8ba01a, type: 3}
 =======
   m_SwingAxis: {x: 0, y: 0, z: 1}
@@ -3253,16 +3238,13 @@ SceneRoots:
   - {fileID: 511428883}
   - {fileID: 1096797759}
 <<<<<<< HEAD
+<<<<<<< HEAD
   - {fileID: 19253760808846760}
 =======
   - {fileID: 132888417}
 >>>>>>> parent of 2c2ac15e (Merge branch 'Nghi_zoombie')
+=======
+  - {fileID: 2684573642203158070}
+>>>>>>> parent of f4a3bda3 (Merge remote-tracking branch 'origin/nghi_zombie')
   - {fileID: 314698812}
   - {fileID: 1983119632}
-  - {fileID: 959876166}
-  - {fileID: 1709631908}
-  - {fileID: 1144674868}
-  - {fileID: 459840446}
-  - {fileID: 773119937}
-  - {fileID: 790128416}
-  - {fileID: 1688893445}
