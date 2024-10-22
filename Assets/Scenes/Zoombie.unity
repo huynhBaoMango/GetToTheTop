@@ -1092,6 +1092,7 @@ GameObject:
   - component: {fileID: 1688893443}
   - component: {fileID: 1688893442}
   - component: {fileID: 1688893446}
+  - component: {fileID: 1688893447}
   m_Layer: 0
   m_Name: Cube (3)
   m_TagString: Obstacle
@@ -1212,6 +1213,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &1688893447
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1688893441}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a9eb098f5a378f4c9b226ba40cf415e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _health: 20
 --- !u!1 &1709631904
 GameObject:
   m_ObjectHideFlags: 0
@@ -1468,7 +1482,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6503885772230804185, guid: 2975d75c13aba4749a16f07dec8ba01a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -12.18
       objectReference: {fileID: 0}
     - target: {fileID: 6503885772230804185, guid: 2975d75c13aba4749a16f07dec8ba01a, type: 3}
       propertyPath: m_LocalPosition.y
