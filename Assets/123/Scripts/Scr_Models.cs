@@ -22,6 +22,8 @@ public class Scr_Models : MonoBehaviour
         public float ViewXSensitivity;
         public float ViewYSensitivity;
 
+        public float AnimingSensitivityEffector;
+
         
         public bool ViewXInverted;
         public bool ViewYInverted;
@@ -50,6 +52,11 @@ public class Scr_Models : MonoBehaviour
         public float CrouchSpeedEffector;
         public float ProneSpeedEffector;
         public float FallingSpeedEffector;
+        public float AinmingSpeedEffector;
+
+        [Header("Is Grounded / Falling")]
+        public float isGroundedRadius;
+        public float isFallingSpeed;
     }
 
     [Serializable]
@@ -62,6 +69,12 @@ public class Scr_Models : MonoBehaviour
     #endregion
 
     #region - Weapons -
+
+    public enum WeaponFireType
+    {
+        SemiAuto,
+        FullyAuto
+    }
 
     [Serializable]  
     public class WeaponSettingModel
@@ -81,9 +94,6 @@ public class Scr_Models : MonoBehaviour
         public bool MovementSwayYInverted;
         public bool MovementSwayXInverted;
         public float MovementSwaySmoothing;
-
-
-
     }
 
 

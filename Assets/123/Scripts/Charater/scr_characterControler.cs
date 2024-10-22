@@ -18,6 +18,7 @@ public class scr_characterControler : MonoBehaviour
 
     [Header("References")]
     public Transform cameraHolder;
+    public Transform camera;
     public Transform feetTranform;
 
     [Header("Settings")]
@@ -25,6 +26,7 @@ public class scr_characterControler : MonoBehaviour
     public float viewClampYMin = -70;
     public float viewClampYMax = 80;
     public LayerMask playerMask;
+    public LayerMask groundMask;
 
     [Header("Gravity")]
     public float gravityAmout;
@@ -48,7 +50,8 @@ public class scr_characterControler : MonoBehaviour
     private Vector3 stanceCapsuleCenterVelocity;
     private float stanceCapsuleHeightVelocity;
 
-    private bool isSprinting;
+    [HideInInspector]
+    public bool isSprinting;
 
     private Vector3 newMovementSpeed;
     private Vector3 newMovementSpeedVelocity;
@@ -56,9 +59,28 @@ public class scr_characterControler : MonoBehaviour
 
     [Header("Weapon")]
     public scr_WeaponComtroller currentWeapon;
+    public float weaponAnimationSpeed;
 
+    [HideInInspector]
+    public bool isGrounded;
+    [HideInInspector]
+    public bool isFalling;
 
+    [Header("Leaning")]
+    public Transform LeanPivot;
+    private float currentLean;
+    private float targetLean;
+    public float leanAngle;
+    public float leanSmoothing;
+    private float leanVelocity;
 
+    private bool isLeanLeft;
+    private bool isLeanRight;
+
+    [Header("Aiming In")]
+    public bool isAimingIn;
+
+    #region - Awake -
 
 
     private void Awake()
@@ -72,6 +94,18 @@ public class scr_characterControler : MonoBehaviour
         defaultInput.Character.Prone.performed += e => Prone();
         defaultInput.Character.Sprint.performed += e => ToggleSprint();
         defaultInput.Character.SprintReleased.performed += e => StopSprint();
+        
+        defaultInput.Character.LeanLeft.performed += e => isLeanLeft = true;
+        defaultInput.Character.LeanLeftReleased.performed += e => isLeanLeft = false;
+        defaultInput.Character.LeanRight.performed += e => isLeanRight = true;
+        defaultInput.Character.LeanRightReleased.performed += e => isLeanRight = false;
+
+        defaultInput.Weapon.FirePressed.performed += e => AimingInPressed();
+        defaultInput.Weapon.Fire2Released.performed += e => AimingInReleased();
+
+        defaultInput.Weapon.Fire1Pressed.performed += e => ShootingPressed();
+        defaultInput.Weapon.Fire1Released.performed += e => ShootingReleased();
+
 
         defaultInput.Enable();
 
@@ -90,20 +124,91 @@ public class scr_characterControler : MonoBehaviour
 
     }
 
+    #endregion
+
+    #region - Update -
+
     private void Update()
     {
         CalculateView();
         CalculateMovement();
         CalculateJump();
         CulculateStance();
+        SetIsGrounded();
+        SetIsFalling();
+        CalulateAinmingIn();
+        CaculateLeaning();
     }
+
+    #endregion
+
+    #region - Shooting -
+
+    private void ShootingPressed()
+    {
+        if (currentWeapon)
+        {
+            currentWeapon.isShooting = true;
+        }
+    }
+
+    private void ShootingReleased()
+    {
+        if (currentWeapon)
+        {
+            currentWeapon.isShooting = false;
+        }
+    }
+
+    #endregion
+
+    #region - Aiming In -
+
+    private void AimingInPressed()
+    {
+        isAimingIn = true;
+    }
+
+    private void AimingInReleased()
+    {
+        isAimingIn = false;
+    }
+
+    private void CalulateAinmingIn()
+    {
+        if (!currentWeapon)
+        {
+            return;
+        }
+
+        currentWeapon.isAnimingIn = isAimingIn;
+
+
+    }
+
+    #endregion
+
+    #region - IsFalling / isGrounded - 
+
+    private void SetIsGrounded()
+    {
+        isGrounded = Physics.CheckSphere(feetTranform.position, playerSettings.isGroundedRadius, groundMask);
+    }
+    private void SetIsFalling()
+    {
+        isFalling = (!isGrounded && characterController.velocity.magnitude > playerSettings.isFallingSpeed);
+    }
+
+    #endregion
+
+    #region - View / Movement
 
     private void CalculateView()
     {
-        newCharacterRotation.y += playerSettings.ViewXSensitivity * (playerSettings.ViewXInverted ? input_View.x : -input_View.x) * Time.deltaTime;
+        newCharacterRotation.y += (isAimingIn ? playerSettings.ViewXSensitivity * playerSettings.AnimingSensitivityEffector : playerSettings.ViewXSensitivity) * (playerSettings.ViewXInverted ? input_View.x : -input_View.x) * Time.deltaTime;
         transform.rotation = Quaternion.Euler(newCharacterRotation);
 
-        newCameraRotation.x += playerSettings.ViewYSensitivity * (playerSettings.ViewYInverted ? input_View.y : -input_View.y) * Time.deltaTime;
+        newCameraRotation.x += (isAimingIn ? playerSettings.ViewYSensitivity * playerSettings.AnimingSensitivityEffector : playerSettings.ViewYSensitivity) * (playerSettings.ViewYInverted ? input_View.y : -input_View.y) * Time.deltaTime;
         newCameraRotation.x = Mathf.Clamp(newCameraRotation.x, viewClampYMin, viewClampYMax); 
 
         cameraHolder.localRotation = Quaternion.Euler(newCameraRotation);
@@ -125,7 +230,7 @@ public class scr_characterControler : MonoBehaviour
             horizontalSpeed = playerSettings.RunningStrafeSpeed;
         }
 
-        if (!characterController.isGrounded)
+        if (!isGrounded)
         {
             playerSettings.SpeedEffector = playerSettings.FallingSpeedEffector;
         }
@@ -137,9 +242,20 @@ public class scr_characterControler : MonoBehaviour
         {
             playerSettings.SpeedEffector = playerSettings.ProneSpeedEffector;
         }
+        else if (isAimingIn)
+        {
+            playerSettings.SpeedEffector = playerSettings.AinmingSpeedEffector;
+        }
         else
         {
             playerSettings.SpeedEffector = 1;
+        }
+
+        weaponAnimationSpeed = characterController.velocity.magnitude / playerSettings.WalkingForwardSpeed * playerSettings.SpeedEffector;
+
+        if (weaponAnimationSpeed > 1)
+        {
+            weaponAnimationSpeed = 1;
         }
 
         verticalSpeed *= playerSettings.SpeedEffector;
@@ -147,7 +263,7 @@ public class scr_characterControler : MonoBehaviour
 
 
 
-        newMovementSpeed = Vector3.SmoothDamp(newMovementSpeed, new Vector3(horizontalSpeed * input_Movement.x * Time.deltaTime, 0, verticalSpeed * input_Movement.y * Time.deltaTime), ref newMovementSpeedVelocity, characterController.isGrounded ? playerSettings.MovementSmoothing : playerSettings.FallingSmoothing);
+        newMovementSpeed = Vector3.SmoothDamp(newMovementSpeed, new Vector3(horizontalSpeed * input_Movement.x * Time.deltaTime, 0, verticalSpeed * input_Movement.y * Time.deltaTime), ref newMovementSpeedVelocity, isGrounded ? playerSettings.MovementSmoothing : playerSettings.FallingSmoothing);
         var movementSpeed = transform.TransformDirection(newMovementSpeed);
 
         if (playerGravity > gravityMin)
@@ -156,7 +272,7 @@ public class scr_characterControler : MonoBehaviour
         }
         
 
-        if (playerGravity < -0.1f && characterController.isGrounded)
+        if (playerGravity < -0.1f && isGrounded)
         {
             playerGravity = -0.1f; 
         }
@@ -167,10 +283,67 @@ public class scr_characterControler : MonoBehaviour
         characterController.Move(movementSpeed);
     }
 
+    #endregion
+
+    #region - Leaning -
+
+    private void CaculateLeaning()
+    {
+        if (isLeanLeft)
+        {
+            targetLean = leanAngle;
+        }
+        else if (isLeanRight)
+        {
+            targetLean = -leanAngle;
+        }
+        else
+        {
+            targetLean = 0;
+        }
+
+
+        currentLean = Mathf.SmoothDamp(currentLean, targetLean, ref leanVelocity, leanSmoothing);
+        LeanPivot.localRotation = Quaternion.Euler(new Vector3(0, 0, currentLean));
+    }
+
+    #endregion
+
+    #region - Jumping -
+
     private void CalculateJump()
     {
         jumpingForce = Vector3.SmoothDamp(jumpingForce, Vector3.zero, ref jumpingForceVelocity, playerSettings.JumpingFalloff);
     }
+
+    private void Jump()
+    {
+        if (!isGrounded || playerStance == PlayerStance.Prone)
+        {
+            return;
+        }
+        if (playerStance == PlayerStance.Crouch)
+        {
+            if (StanceCheck(playerStandStance.StanceCollider.height))
+            {
+                return;
+            }
+
+            playerStance = PlayerStance.Stand;
+            return;
+        }
+
+        //Jump
+        jumpingForce = Vector3.up * playerSettings.JumpingHeight;
+        playerGravity = 0;
+
+        currentWeapon.TriggerJump();
+
+    }
+
+    #endregion
+
+    #region - Stance - 
 
     private void CulculateStance()
     {
@@ -193,28 +366,6 @@ public class scr_characterControler : MonoBehaviour
         characterController.height = Mathf.SmoothDamp(characterController.height, currentStance.StanceCollider.height, ref stanceCapsuleHeightVelocity, playerStanceSmoothing);
         characterController.center = Vector3.SmoothDamp(characterController.center, currentStance.StanceCollider.center, ref stanceCapsuleCenterVelocity, playerStanceSmoothing);
 
-    }
-
-    private void Jump()
-    {
-        if (!characterController.isGrounded || playerStance == PlayerStance.Prone)
-        {
-            return;
-        }
-        if (playerStance == PlayerStance.Crouch)
-        {
-            if (StanceCheck(playerStandStance.StanceCollider.height))
-            {
-                return;
-            }
-
-            playerStance = PlayerStance.Stand;
-            return;
-        }
-
-        //Jump
-        jumpingForce = Vector3.up * playerSettings.JumpingHeight;
-        playerGravity = 0;
     }
 
     private void Crouch()
@@ -253,6 +404,10 @@ public class scr_characterControler : MonoBehaviour
         return Physics.CheckCapsule(start, end, characterController.radius, playerMask);
     }
 
+    #endregion
+
+    #region - Sprinting -
+
     private void ToggleSprint()
     {
         if (input_Movement.y <= 0.2f)
@@ -273,6 +428,18 @@ public class scr_characterControler : MonoBehaviour
 
             
     }
+
+    #endregion
+
+    #region - Gizoms
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(feetTranform.position, playerSettings.isGroundedRadius);
+    }
+
+
+    #endregion
 
 
 
