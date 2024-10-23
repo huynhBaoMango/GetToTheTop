@@ -97,8 +97,7 @@ namespace StarterAssets
         private int _animIDJump;
         private int _animIDFreeFall;
         private int _animIDMotionSpeed;
-        public float Sensitivity = 1f;
-        private bool _rorateOnMove = true;
+
 #if ENABLE_INPUT_SYSTEM 
         private PlayerInput _playerInput;
 #endif
@@ -106,6 +105,7 @@ namespace StarterAssets
         private CharacterController _controller;
         private StarterAssetsInputs _input;
         private GameObject _mainCamera;
+
         private const float _threshold = 0.01f;
 
         private bool _hasAnimator;
@@ -198,8 +198,8 @@ namespace StarterAssets
                 //Don't multiply mouse input by Time.deltaTime;
                 float deltaTimeMultiplier = IsCurrentDeviceMouse ? 1.0f : Time.deltaTime;
 
-                _cinemachineTargetYaw += _input.look.x * deltaTimeMultiplier* Sensitivity;
-                _cinemachineTargetPitch += _input.look.y * deltaTimeMultiplier* Sensitivity;
+                _cinemachineTargetYaw += _input.look.x * deltaTimeMultiplier;
+                _cinemachineTargetPitch += _input.look.y * deltaTimeMultiplier;
             }
 
             // clamp our rotations so our values are limited 360 degrees
@@ -261,9 +261,7 @@ namespace StarterAssets
                     RotationSmoothTime);
 
                 // rotate to face input direction relative to camera position
-                if (_rorateOnMove) { 
                 transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
-                }
             }
 
 
@@ -390,14 +388,5 @@ namespace StarterAssets
                 AudioSource.PlayClipAtPoint(LandingAudioClip, transform.TransformPoint(_controller.center), FootstepAudioVolume);
             }
         }
-        public void SetSentivity(float newSensitivity)
-        {
-            Sensitivity = newSensitivity;
-        }
-        public void SetRotateOnMove(bool newRotationMove)
-        {
-            _rorateOnMove = newRotationMove;
-        }
-            
     }
 }
