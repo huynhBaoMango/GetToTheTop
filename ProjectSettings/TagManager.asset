@@ -5,17 +5,15 @@ TagManager:
   serializedVersion: 2
   tags:
   - CinemachineTarget
-  - _player
-  - Obstacle
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Ground
+  - 
   - Water
   - UI
   - GroundWeapon
-  - Obstacle
+  - Player
   - 
   - 
   - 
