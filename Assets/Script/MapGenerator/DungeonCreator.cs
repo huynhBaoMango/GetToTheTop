@@ -23,10 +23,11 @@ public class DungeonCreator : MonoBehaviour
     List<Vector3Int> possibleWallHorizontalPosition;
     List<Vector3Int> possibleWallVerticalPosition;
 
+
     // Start is called before the first frame update
     void Start()
     {
-        CreateDungeon();
+        //CreateDungeon();
     }
 
     [Button]
@@ -109,7 +110,7 @@ public class DungeonCreator : MonoBehaviour
         GameObject dungeonFloor = new GameObject("Mesh" + bottomLeftCorner, typeof(MeshFilter), typeof(MeshRenderer));
         if (thistype.Equals(Node.NodeType.Room))
         {
-            var GridDrawer = dungeonFloor.AddComponent<GridDrawer>();
+            var GridMaker = dungeonFloor.AddComponent<GridMaker>();
         }
 
         dungeonFloor.transform.position = Vector3.zero;
