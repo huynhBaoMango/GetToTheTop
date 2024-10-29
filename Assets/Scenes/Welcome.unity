@@ -4496,6 +4496,7 @@ GameObject:
   - component: {fileID: 1323755175}
   - component: {fileID: 1323755174}
   - component: {fileID: 1323755176}
+  - component: {fileID: 1323755177}
   m_Layer: 5
   m_Name: pnLogin
   m_TagString: Untagged
@@ -4584,6 +4585,25 @@ MonoBehaviour:
   confirmPasswordInput: {fileID: 0}
   usernameInput: {fileID: 0}
   feedbackText: {fileID: 261393046}
+--- !u!114 &1323755177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1323755172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be8d0808de209684ea5b1b6cfeb17161, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentUser:
+    email: 
+    username: 
+    password: 
+    coin: 0
+    ownedSkins: []
+    selectedSkin: 
 --- !u!1 &1501765371
 GameObject:
   m_ObjectHideFlags: 0

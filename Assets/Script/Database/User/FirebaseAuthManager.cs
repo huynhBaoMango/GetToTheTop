@@ -12,7 +12,7 @@ public class FirebaseAuthManager : MonoBehaviour
     public TMP_InputField confirmPasswordInput;
     public TMP_InputField usernameInput;
     public TextMeshProUGUI feedbackText;
-
+    //public static string userId;
     private string apiKey = "AIzaSyA7kIAGmNwyJIJsS9x8uOjln8wDZ_wyDLo";
 
     //Hàm Register người dùng
@@ -53,15 +53,15 @@ public class FirebaseAuthManager : MonoBehaviour
         {
             feedbackText.text = "User registered successfully!";
             var responseData = JsonUtility.FromJson<FirebaseAuthRespone>(request.downloadHandler.text);
-
+            
             // Lưu userId và idToken vào PlayerPrefs
-            PlayerPrefs.SetString("userId", responseData.localId);
-            PlayerPrefs.SetString("idToken", responseData.idToken);
+            //PlayerPrefs.SetString("userId", responseData.localId);
+            //PlayerPrefs.SetString("idToken", responseData.idToken);
 
-            // Lưu username vào PlayerPrefs
-            PlayerPrefs.SetString("username", username);
-            PlayerPrefs.SetString("email", email);
-            PlayerPrefs.Save();
+            //// Lưu username vào PlayerPrefs
+            //PlayerPrefs.SetString("username", username);
+            //PlayerPrefs.SetString("email", email);
+            //PlayerPrefs.Save();
             StartCoroutine(AddUserToDatabase(responseData.localId, email, username, 1000)); // Thêm vào Realtime Database
         }
         else
@@ -104,6 +104,9 @@ public class FirebaseAuthManager : MonoBehaviour
     // Hàm đăng nhập người dùng
     public void LoginUser()
     {
+        // Đặt currentUser về null trước khi đăng nhập
+        Common.instance.currentUser = null;
+
         string email = emailInput.text;
         string password = passwordInput.text;
 
@@ -132,20 +135,22 @@ public class FirebaseAuthManager : MonoBehaviour
         {
             feedbackText.text = "User logged in successfully!";
             var responseData = JsonUtility.FromJson<FirebaseAuthRespone>(request.downloadHandler.text);
+      
             // Tiếp tục với thông tin người dùng sau khi đăng nhập thành công (vd: lưu token, localId...)
-            //PlayerPrefs.SetString("idToken", responseData.idToken);
-            //PlayerPrefs.SetString("userId", responseData.localId);
-            //PlayerPrefs.Save();
+            PlayerPrefs.SetString("idToken", responseData.idToken);
+            PlayerPrefs.SetString("userId", responseData.localId);
+            PlayerPrefs.Save();
+
+            // Gọi hàm GetCurrentUser để tải thông tin người dùng
+            yield return StartCoroutine(Common.instance.GetCurrentUser());
 
 
-            // Lấy thông tin người dùng từ Firebase Database và lưu username
-            //StartCoroutine(GetUsernameFromDatabase(responseData.localId));
-
-            SceneManager.LoadScene("Menu");
+            SceneManager.LoadScene("SkinScene");
         }
         else
         {
             feedbackText.text = "Login failed: " + request.error;
         }
     }
+
 }
